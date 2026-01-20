@@ -79,14 +79,6 @@ export default defineConfig([
 ## me quede en la implementacion de Testing with Playwright, en el promt
 
 ###y tengo este prompt pendiente
-//////////////////
-1 crea una pantalla responsiva en donde se muestren todos los datos del usuario actual, como un profile page y linkealo a la navegacion /profile Use Tailwind CSS for 
-styling with a modern, professional design. Support dark mode.
-2 crea un panel responsivo de tareas en donde se puedan mostrar tareas con 3 estados Blocked, In Progress, Done, esta pantalla debe ser mostrada cuando el usuario navega a /tasks Use Tailwind CSS for 
-styling with a modern, professional design. Support dark mode.
-//////////////////
-
-###y tengo este prompt pendiente
 Student Exercise 6: Test Form Validation
 
 Objective: Create comprehensive tests for a multi-step form.
