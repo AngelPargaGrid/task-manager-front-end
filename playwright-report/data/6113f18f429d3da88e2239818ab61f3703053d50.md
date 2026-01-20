@@ -1,0 +1,87 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "TaskManager" [level=1] [ref=e7]
+        - button "Close sidebar" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Dashboard" [ref=e14]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e16]: Dashboard
+          - listitem [ref=e17]:
+            - link "Tasks" [ref=e18]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e20]: Tasks
+          - listitem [ref=e21]:
+            - link "Projects" [ref=e22]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e24]: Projects
+          - listitem [ref=e25]:
+            - link "Team" [ref=e26]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e28]: Team
+          - listitem [ref=e29]:
+            - link "Calendar" [ref=e30]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e32]: Calendar
+          - listitem [ref=e33]:
+            - link "Settings" [ref=e34]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e37]: Settings
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - button "Open sidebar" [ref=e42] [cursor=pointer]:
+            - img [ref=e43]
+          - heading "Dashboard" [level=2] [ref=e45]
+        - generic [ref=e46]:
+          - button "Switch to dark mode" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "User menu" [ref=e51] [cursor=pointer]:
+            - img "John Doe" [ref=e52]
+    - main [ref=e53]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - img "John Doe" [ref=e60]
+            - generic "Online" [ref=e61]
+          - button "Edit Profile" [ref=e62] [cursor=pointer]
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - heading "John Doe" [level=1] [ref=e65]
+            - paragraph [ref=e66]: Project Manager
+          - paragraph [ref=e68]: Senior Project Manager with 10+ years of experience in agile methodologies and team leadership.
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - img [ref=e71]
+              - generic [ref=e73]: john.doe@example.com
+            - generic [ref=e74]:
+              - img [ref=e75]
+              - generic [ref=e78]: San Francisco, CA
+            - generic [ref=e79]:
+              - img [ref=e80]
+              - link "johndoe.design" [ref=e82]:
+                - /url: https://johndoe.design
+            - generic [ref=e83]:
+              - img [ref=e84]
+              - generic [ref=e86]: Joined March 2023
+```

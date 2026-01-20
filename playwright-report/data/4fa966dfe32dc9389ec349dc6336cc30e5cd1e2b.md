@@ -1,0 +1,177 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e13]: Dashboard
+          - listitem [ref=e14]:
+            - link "Tasks" [ref=e15] [cursor=pointer]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e17]: Tasks
+          - listitem [ref=e18]:
+            - link "Projects" [active] [ref=e19] [cursor=pointer]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e21]: Projects
+          - listitem [ref=e22]:
+            - link "Team" [ref=e23] [cursor=pointer]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e25]: Team
+          - listitem [ref=e26]:
+            - link "Calendar" [ref=e27] [cursor=pointer]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e29]: Calendar
+          - listitem [ref=e30]:
+            - link "Settings" [ref=e31] [cursor=pointer]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e34]: Settings
+  - generic [ref=e35]:
+    - banner [ref=e36]:
+      - generic [ref=e37]:
+        - heading "Projects" [level=2] [ref=e39]
+        - generic [ref=e40]:
+          - button "Switch to dark mode" [ref=e41] [cursor=pointer]:
+            - img [ref=e42]
+          - button "User menu" [ref=e45] [cursor=pointer]:
+            - img "John Doe" [ref=e46]
+            - generic [ref=e47]: John Doe
+            - img [ref=e48]
+    - main [ref=e50]:
+      - generic [ref=e52]:
+        - heading "Products" [level=1] [ref=e55]
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - textbox "Search products" [ref=e58]:
+              - /placeholder: Search products...
+            - combobox "Filter by category" [ref=e59]:
+              - option "All" [selected]
+              - option "Electronics"
+              - option "Wearables"
+              - option "Office"
+            - generic [ref=e60]:
+              - spinbutton "Minimum price" [ref=e61]
+              - spinbutton "Maximum price" [ref=e62]
+            - combobox "Sort products" [ref=e63]:
+              - option "Default Sorting" [selected]
+              - 'option "Price: Low to High"'
+              - 'option "Price: High to Low"'
+              - option "Rating"
+          - button "Clear all filters" [ref=e65] [cursor=pointer]
+        - generic [ref=e66]:
+          - 'article "Product: Wireless Bluetooth Headphones" [ref=e67] [cursor=pointer]':
+            - generic [ref=e68]:
+              - generic [ref=e69]: Sale
+              - generic [ref=e71]: "-33%"
+              - img "Wireless Bluetooth Headphones" [ref=e72]
+              - img [ref=e74]
+              - generic [ref=e77]: Quick View
+            - generic [ref=e78]:
+              - heading "Wireless Bluetooth Headphones" [level=3] [ref=e79]
+              - paragraph [ref=e80]: Premium noise-cancelling headphones with 30-hour battery life and crystal clear audio quality.
+              - generic [ref=e81]:
+                - 'img "Rating: 4.5 out of 5 stars" [ref=e82]':
+                  - img [ref=e83]
+                  - img [ref=e85]
+                  - img [ref=e87]
+                  - img [ref=e89]
+                  - img [ref=e91]
+                - generic "1234 reviews" [ref=e94]: (1234)
+              - generic [ref=e95]:
+                - 'generic "Price: $199.99" [ref=e96]': $199.99
+                - 'generic "Original price: $299.99" [ref=e97]': $299.99
+                - generic [ref=e98]: Discounted from $299.99 to $199.99
+              - button "Add Wireless Bluetooth Headphones to cart" [ref=e99]:
+                - generic [ref=e100]:
+                  - img [ref=e101]
+                  - text: Add to Cart
+          - 'article "Product: Smart Watch Pro" [ref=e103] [cursor=pointer]':
+            - generic [ref=e104]:
+              - generic [ref=e105]: New
+              - img "Smart Watch Pro" [ref=e106]
+              - img [ref=e108]
+              - generic [ref=e111]: Quick View
+            - generic [ref=e112]:
+              - heading "Smart Watch Pro" [level=3] [ref=e113]
+              - paragraph [ref=e114]: Advanced fitness tracking, heart rate monitor, GPS, and smartphone notifications all in one sleek design.
+              - generic [ref=e115]:
+                - 'img "Rating: 4.8 out of 5 stars" [ref=e116]':
+                  - img [ref=e117]
+                  - img [ref=e119]
+                  - img [ref=e121]
+                  - img [ref=e123]
+                  - img [ref=e125]
+                - generic "856 reviews" [ref=e128]: (856)
+              - 'generic "Price: $349.99" [ref=e130]': $349.99
+              - button "Add Smart Watch Pro to cart" [ref=e131]:
+                - generic [ref=e132]:
+                  - img [ref=e133]
+                  - text: Add to Cart
+          - 'article "Product: Portable Laptop Stand" [ref=e135] [cursor=pointer]':
+            - generic [ref=e136]:
+              - generic [ref=e137]: Limited
+              - generic [ref=e139]: "-38%"
+              - img "Portable Laptop Stand" [ref=e140]
+              - generic [ref=e142]: Quick View
+            - generic [ref=e143]:
+              - heading "Portable Laptop Stand" [level=3] [ref=e144]
+              - paragraph [ref=e145]: Ergonomic aluminum stand that elevates your laptop for better posture and improved airflow.
+              - generic [ref=e146]:
+                - 'img "Rating: 4.2 out of 5 stars" [ref=e147]':
+                  - img [ref=e148]
+                  - img [ref=e150]
+                  - img [ref=e152]
+                  - img [ref=e154]
+                  - img [ref=e156]
+                - generic "567 reviews" [ref=e158]: (567)
+              - generic [ref=e159]:
+                - 'generic "Price: $49.99" [ref=e160]': $49.99
+                - 'generic "Original price: $79.99" [ref=e161]': $79.99
+                - generic [ref=e162]: Discounted from $79.99 to $49.99
+              - button "Add Portable Laptop Stand to cart" [ref=e163]:
+                - generic [ref=e164]:
+                  - img [ref=e165]
+                  - text: Add to Cart
+          - 'article "Product: Mechanical Keyboard RGB" [ref=e167] [cursor=pointer]':
+            - generic [ref=e168]:
+              - img "Mechanical Keyboard RGB" [ref=e169]
+              - img [ref=e171]
+              - generic [ref=e174]: Quick View
+            - generic [ref=e175]:
+              - heading "Mechanical Keyboard RGB" [level=3] [ref=e176]
+              - paragraph [ref=e177]: Cherry MX switches, per-key RGB lighting, and premium build quality for the ultimate typing experience.
+              - generic [ref=e178]:
+                - 'img "Rating: 4.7 out of 5 stars" [ref=e179]':
+                  - img [ref=e180]
+                  - img [ref=e182]
+                  - img [ref=e184]
+                  - img [ref=e186]
+                  - img [ref=e188]
+                - generic "942 reviews" [ref=e191]: (942)
+              - 'generic "Price: $129.99" [ref=e193]': $129.99
+              - button "Add Mechanical Keyboard RGB to cart" [ref=e194]:
+                - generic [ref=e195]:
+                  - img [ref=e196]
+                  - text: Add to Cart
+        - generic [ref=e198]:
+          - button "Previous page" [disabled] [ref=e199]: Previous
+          - generic [ref=e200]: Page 1 of 3
+          - button "Next page" [ref=e201] [cursor=pointer]: Next
+```

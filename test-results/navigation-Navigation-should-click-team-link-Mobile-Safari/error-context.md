@@ -1,0 +1,213 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "TaskManager" [level=1] [ref=e7]
+        - button "Close sidebar" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Dashboard" [ref=e14]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e16]: Dashboard
+          - listitem [ref=e17]:
+            - link "Tasks" [ref=e18]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e20]: Tasks
+          - listitem [ref=e21]:
+            - link "Projects" [ref=e22]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e24]: Projects
+          - listitem [ref=e25]:
+            - link "Team" [ref=e26]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e28]: Team
+          - listitem [ref=e29]:
+            - link "Calendar" [ref=e30]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e32]: Calendar
+          - listitem [ref=e33]:
+            - link "Settings" [ref=e34]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e37]: Settings
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - button "Open sidebar" [ref=e42] [cursor=pointer]:
+            - img [ref=e43]
+          - heading "Dashboard" [level=2] [ref=e45]
+        - generic [ref=e46]:
+          - button "Switch to dark mode" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "User menu" [ref=e51] [cursor=pointer]:
+            - img "John Doe" [ref=e52]
+    - main [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - heading "Dashboard" [level=1] [ref=e56]
+          - button "Add Task" [ref=e57] [cursor=pointer]
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - img [ref=e62]
+              - generic [ref=e64]: +12%
+            - paragraph [ref=e66]: "8"
+            - paragraph [ref=e67]: Total Tasks
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - img [ref=e71]
+              - generic [ref=e73]: +5%
+            - paragraph [ref=e75]: "3"
+            - paragraph [ref=e76]: In Progress
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - img [ref=e80]
+              - generic [ref=e82]: +8%
+            - paragraph [ref=e84]: "2"
+            - paragraph [ref=e85]: Completed
+          - generic [ref=e86]:
+            - generic [ref=e87]:
+              - img [ref=e89]
+              - generic [ref=e91]: "-2%"
+            - paragraph [ref=e93]: "1"
+            - paragraph [ref=e94]: Overdue
+        - generic [ref=e95]:
+          - button "All Tasks" [pressed] [ref=e96] [cursor=pointer]
+          - button "To Do" [ref=e97] [cursor=pointer]
+          - button "In Progress" [ref=e98] [cursor=pointer]
+          - button "Completed" [ref=e99] [cursor=pointer]
+          - button "Blocked" [ref=e100] [cursor=pointer]
+        - generic [ref=e101]:
+          - 'button "Task: Design new landing page" [ref=e102] [cursor=pointer]':
+            - generic [ref=e103]:
+              - heading "Design new landing page" [level=3] [ref=e104]
+              - button "Change task status from in-progress" [ref=e105]: Complete
+            - paragraph [ref=e106]: Create a modern and responsive landing page design for the product launch
+            - generic [ref=e107]:
+              - generic [ref=e108]:
+                - generic [ref=e109]: High
+                - generic [ref=e110]: in progress
+              - img "Sarah Johnson" [ref=e112]
+            - generic [ref=e113]:
+              - generic [ref=e114]: "#design"
+              - generic [ref=e115]: "#frontend"
+            - generic [ref=e116]:
+              - img [ref=e117]
+              - generic [ref=e119]: Jan 23
+          - 'button "Task: Implement user authentication" [ref=e120] [cursor=pointer]':
+            - generic [ref=e121]:
+              - heading "Implement user authentication" [level=3] [ref=e122]
+              - button "Change task status from todo" [ref=e123]: Start
+            - paragraph [ref=e124]: Set up JWT-based authentication system with login and registration
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - generic [ref=e127]: Urgent
+                - generic [ref=e128]: todo
+              - img "Mike Chen" [ref=e130]
+            - generic [ref=e131]:
+              - generic [ref=e132]: "#backend"
+              - generic [ref=e133]: "#security"
+            - generic [ref=e134]:
+              - img [ref=e135]
+              - generic [ref=e137]: Jan 21
+          - 'button "Task: Write API documentation" [ref=e138] [cursor=pointer]':
+            - generic [ref=e139]:
+              - heading "Write API documentation" [level=3] [ref=e140]
+              - button "Change task status from completed" [ref=e141]: Reopen
+            - paragraph [ref=e142]: Document all REST API endpoints with examples and error codes
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - generic [ref=e145]: Medium
+                - generic [ref=e146]: completed
+              - img "Emily Davis" [ref=e148]
+            - generic [ref=e150]: "#documentation"
+          - 'button "Task: Fix mobile responsive issues" [ref=e151] [cursor=pointer]':
+            - generic [ref=e152]:
+              - heading "Fix mobile responsive issues" [level=3] [ref=e153]
+              - button "Change task status from in-progress" [ref=e154]: Complete
+            - paragraph [ref=e155]: Address layout problems on mobile devices for the dashboard
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - generic [ref=e158]: High
+                - generic [ref=e159]: in progress
+              - img "Alex Rodriguez" [ref=e161]
+            - generic [ref=e162]:
+              - generic [ref=e163]: "#frontend"
+              - generic [ref=e164]: "#mobile"
+            - generic [ref=e165]:
+              - img [ref=e166]
+              - generic [ref=e168]: Jan 19 (Overdue)
+          - 'button "Task: Setup CI/CD pipeline" [ref=e169] [cursor=pointer]':
+            - generic [ref=e170]:
+              - heading "Setup CI/CD pipeline" [level=3] [ref=e171]
+              - button "Change task status from blocked" [ref=e172]: Reopen
+            - paragraph [ref=e173]: Configure automated testing and deployment pipeline
+            - generic [ref=e174]:
+              - generic [ref=e175]:
+                - generic [ref=e176]: Medium
+                - generic [ref=e177]: blocked
+              - img "David Kim" [ref=e179]
+            - generic [ref=e181]: "#devops"
+          - 'button "Task: Optimize database queries" [ref=e182] [cursor=pointer]':
+            - generic [ref=e183]:
+              - heading "Optimize database queries" [level=3] [ref=e184]
+              - button "Change task status from todo" [ref=e185]: Start
+            - paragraph [ref=e186]: Review and optimize slow database queries for better performance
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - generic [ref=e189]: Low
+                - generic [ref=e190]: todo
+              - img "Lisa Wang" [ref=e192]
+            - generic [ref=e193]:
+              - generic [ref=e194]: "#backend"
+              - generic [ref=e195]: "#performance"
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - generic [ref=e199]: Jan 27
+          - 'button "Task: Create user onboarding flow" [ref=e200] [cursor=pointer]':
+            - generic [ref=e201]:
+              - heading "Create user onboarding flow" [level=3] [ref=e202]
+              - button "Change task status from in-progress" [ref=e203]: Complete
+            - paragraph [ref=e204]: Design and implement a smooth onboarding experience for new users
+            - generic [ref=e205]:
+              - generic [ref=e206]:
+                - generic [ref=e207]: High
+                - generic [ref=e208]: in progress
+              - img "Sarah Johnson" [ref=e210]
+            - generic [ref=e211]:
+              - generic [ref=e212]: "#design"
+              - generic [ref=e213]: "#ux"
+            - generic [ref=e214]:
+              - img [ref=e215]
+              - generic [ref=e217]: Jan 25
+          - 'button "Task: Add dark mode support" [ref=e218] [cursor=pointer]':
+            - generic [ref=e219]:
+              - heading "Add dark mode support" [level=3] [ref=e220]
+              - button "Change task status from completed" [ref=e221]: Reopen
+            - paragraph [ref=e222]: Implement dark mode theme across the entire application
+            - generic [ref=e223]:
+              - generic [ref=e224]:
+                - generic [ref=e225]: Medium
+                - generic [ref=e226]: completed
+              - img "Mike Chen" [ref=e228]
+            - generic [ref=e229]:
+              - generic [ref=e230]: "#frontend"
+              - generic [ref=e231]: "#ui"
+```

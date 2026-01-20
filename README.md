@@ -71,3 +71,29 @@ export default defineConfig([
   },
 ])
 ```
+
+
+
+
+## TODO: https://learning.griddynamics.com/#/online-course-player/08cac411-b23b-4e3e-87dd-afe36ba4aa12
+## me quede en la implementacion de Testing with Playwright, en el promt
+
+###y tengo este prompt pendiente
+//////////////////
+1 crea una pantalla responsiva en donde se muestren todos los datos del usuario actual, como un profile page y linkealo a la navegacion /profile Use Tailwind CSS for 
+styling with a modern, professional design. Support dark mode.
+2 crea un panel responsivo de tareas en donde se puedan mostrar tareas con 3 estados Blocked, In Progress, Done, esta pantalla debe ser mostrada cuando el usuario navega a /tasks Use Tailwind CSS for 
+styling with a modern, professional design. Support dark mode.
+//////////////////
+
+###y tengo este prompt pendiente
+Student Exercise 6: Test Form Validation
+
+Objective: Create comprehensive tests for a multi-step form.
+
+Suggested Prompt:
+
+
+Create Playwright tests for a multi-step registration form. Test field validation, 
+navigation between steps, form submission, error messages, and success state. 
+Include accessibility checks for form labels and error announcements.

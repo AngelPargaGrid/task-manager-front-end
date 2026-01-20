@@ -1,0 +1,61 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e13]: Dashboard
+          - listitem [ref=e14]:
+            - link "Tasks" [ref=e15]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e17]: Tasks
+          - listitem [ref=e18]:
+            - link "Projects" [ref=e19]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e21]: Projects
+          - listitem [ref=e22]:
+            - link "Team" [ref=e23]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e25]: Team
+          - listitem [ref=e26]:
+            - link "Calendar" [ref=e27]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e29]: Calendar
+          - listitem [ref=e30]:
+            - link "Settings" [ref=e31]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e34]: Settings
+  - generic [ref=e35]:
+    - banner [ref=e36]:
+      - generic [ref=e37]:
+        - heading "Calendar" [level=2] [ref=e39]
+        - generic [ref=e40]:
+          - button "Switch to dark mode" [ref=e41] [cursor=pointer]:
+            - img [ref=e42]
+          - button "User menu" [ref=e45] [cursor=pointer]:
+            - img "John Doe" [ref=e46]
+            - generic [ref=e47]: John Doe
+            - img [ref=e48]
+    - main [ref=e50]:
+      - generic [ref=e51]:
+        - heading "Calendar Page" [level=2] [ref=e52]
+        - paragraph [ref=e53]: This page is coming soon...
+```

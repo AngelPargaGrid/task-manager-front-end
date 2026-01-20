@@ -1,0 +1,61 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e12]: Dashboard
+          - listitem [ref=e13]:
+            - link "Tasks" [ref=e14] [cursor=pointer]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e15]: Tasks
+          - listitem [ref=e16]:
+            - link "Projects" [ref=e17] [cursor=pointer]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e18]: Projects
+          - listitem [ref=e19]:
+            - link "Team" [ref=e20] [cursor=pointer]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e21]: Team
+          - listitem [ref=e22]:
+            - link "Calendar" [active] [ref=e23] [cursor=pointer]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e24]: Calendar
+          - listitem [ref=e25]:
+            - link "Settings" [ref=e26] [cursor=pointer]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e27]: Settings
+  - generic [ref=e28]:
+    - banner [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Calendar" [level=2] [ref=e32]
+        - generic [ref=e33]:
+          - button "Switch to dark mode" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+          - button "User menu" [ref=e38] [cursor=pointer]:
+            - img "John Doe" [ref=e39]
+            - generic [ref=e40]: John Doe
+            - img [ref=e41]
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - heading "Calendar Page" [level=2] [ref=e45]
+        - paragraph [ref=e46]: This page is coming soon...
+```

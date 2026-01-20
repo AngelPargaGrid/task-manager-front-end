@@ -1,127 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppLayout } from './components/layout/AppLayout';
 import { DashboardDemo } from './components/features/DashboardDemo';
 import { ProductCardDemo } from './components/features/ProductCardDemo';
 import { UserProfileDemo } from './components/features/UserProfileDemo';
-import { NavBarDemo } from './components/features/NavBarDemo';
+import { TaskBoard } from './components/features/TaskBoard';
+import { ProfilePage } from './components/layout/ProfilePage';
 import type { SidebarItem, Task } from './types/dashboard.types';
 import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
+import { Login } from './components/auth/Login';
+import { Register } from './components/auth/Register';
 
 type Page = '/dashboard' | '/tasks' | '/projects' | '/team' | '/calendar' | '/settings' | '/profile';
+type AuthState = 'login' | 'register' | 'authenticated';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('/dashboard');
-  const [tasks] = useState<Task[]>([
-    {
-      id: '1',
-      title: 'Design new landing page',
-      description: 'Create a modern and responsive landing page design for the product launch',
-      status: 'in-progress',
-      priority: 'high',
-      assignee: {
-        name: 'Sarah Johnson',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
-      },
-      dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-      tags: ['design', 'frontend'],
-      createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '2',
-      title: 'Implement user authentication',
-      description: 'Set up JWT-based authentication system with login and registration',
-      status: 'todo',
-      priority: 'urgent',
-      assignee: {
-        name: 'Mike Chen',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
-      },
-      dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
-      tags: ['backend', 'security'],
-      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '3',
-      title: 'Write API documentation',
-      description: 'Document all REST API endpoints with examples and error codes',
-      status: 'completed',
-      priority: 'medium',
-      assignee: {
-        name: 'Emily Davis',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emily',
-      },
-      tags: ['documentation'],
-      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '4',
-      title: 'Fix mobile responsive issues',
-      description: 'Address layout problems on mobile devices for the dashboard',
-      status: 'in-progress',
-      priority: 'high',
-      assignee: {
-        name: 'Alex Rodriguez',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
-      },
-      dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-      tags: ['frontend', 'mobile'],
-      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '5',
-      title: 'Setup CI/CD pipeline',
-      description: 'Configure automated testing and deployment pipeline',
-      status: 'blocked',
-      priority: 'medium',
-      assignee: {
-        name: 'David Kim',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
-      },
-      tags: ['devops'],
-      createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '6',
-      title: 'Optimize database queries',
-      description: 'Review and optimize slow database queries for better performance',
-      status: 'todo',
-      priority: 'low',
-      assignee: {
-        name: 'Lisa Wang',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lisa',
-      },
-      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      tags: ['backend', 'performance'],
-      createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '7',
-      title: 'Create user onboarding flow',
-      description: 'Design and implement a smooth onboarding experience for new users',
-      status: 'in-progress',
-      priority: 'high',
-      assignee: {
-        name: 'Sarah Johnson',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
-      },
-      dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-      tags: ['design', 'ux'],
-      createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: '8',
-      title: 'Add dark mode support',
-      description: 'Implement dark mode theme across the entire application',
-      status: 'completed',
-      priority: 'medium',
-      assignee: {
-        name: 'Mike Chen',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
-      },
-      tags: ['frontend', 'ui'],
-      createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-  ]);
+  const [authState, setAuthState] = useState<AuthState>('login');
+  const [currentPage, setCurrentPage] = useState<Page>(() => {
+    const path = window.location.pathname;
+    const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/calendar', '/settings', '/profile'];
+    return validPages.includes(path as Page) ? (path as Page) : '/dashboard';
+  });
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/calendar', '/settings', '/profile'];
+      if (validPages.includes(path as Page)) {
+        setCurrentPage(path as Page);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleSidebarItemClick = (href: string) => {
+    window.history.pushState({}, '', href);
+    setCurrentPage(href as Page);
+  };
+
+  const handleProfileClick = () => {
+    window.history.pushState({}, '', '/profile');
+    setCurrentPage('/profile');
+  };
 
   const sidebarItems: SidebarItem[] = [
     {
@@ -136,7 +58,7 @@ function App() {
     {
       label: 'Tasks',
       href: '/tasks',
-      badge: tasks.filter((t) => t.status !== 'completed').length,
+      // badge: tasks.filter((t) => t.status !== 'completed').length, // Keeping this static or removed for now since tasks are in DashboardDemo
       icon: (
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -189,17 +111,8 @@ function App() {
     role: 'Project Manager',
   };
 
-  const handleSidebarItemClick = (href: string) => {
-    setCurrentPage(href as Page);
-  };
-
-  const handleProfileClick = () => {
-    setCurrentPage('/profile');
-  };
-
   const handleLogout = () => {
-    console.log('Logging out');
-    alert('User logged out');
+    setAuthState('login');
   };
 
   const renderPage = () => {
@@ -207,11 +120,20 @@ function App() {
       case '/dashboard':
         return <DashboardDemo />;
       case '/tasks':
-        return <NavBarDemo />;
+        return <TaskBoard />;
       case '/projects':
         return <ProductCardDemo />;
       case '/profile':
-        return <UserProfileDemo />;
+        return <ProfilePage user={{
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            role: user.role,
+            bio: "Senior Project Manager with 10+ years of experience in agile methodologies and team leadership.",
+            location: "San Francisco, CA",
+            website: "johndoe.design",
+            joinDate: "March 2023"
+        }} />;
       case '/team':
         return <UserProfileDemo />;
       case '/calendar':
@@ -232,6 +154,14 @@ function App() {
     }
   };
 
+  if (authState === 'login') {
+    return <Login onLogin={() => setAuthState('authenticated')} onSwitchToRegister={() => setAuthState('register')} />;
+  }
+
+  if (authState === 'register') {
+    return <Register onRegister={() => setAuthState('authenticated')} onSwitchToLogin={() => setAuthState('login')} />;
+  }
+console.log(authState);
   return (
     <AppLayout
       sidebarItems={sidebarItems}

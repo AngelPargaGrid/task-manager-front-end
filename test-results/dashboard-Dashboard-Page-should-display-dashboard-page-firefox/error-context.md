@@ -1,0 +1,225 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e12]: Dashboard
+          - listitem [ref=e13]:
+            - link "Tasks" [ref=e14] [cursor=pointer]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e15]: Tasks
+          - listitem [ref=e16]:
+            - link "Projects" [ref=e17] [cursor=pointer]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e18]: Projects
+          - listitem [ref=e19]:
+            - link "Team" [ref=e20] [cursor=pointer]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e21]: Team
+          - listitem [ref=e22]:
+            - link "Calendar" [ref=e23] [cursor=pointer]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e24]: Calendar
+          - listitem [ref=e25]:
+            - link "Settings" [ref=e26] [cursor=pointer]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e27]: Settings
+  - generic [ref=e28]:
+    - banner [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Dashboard" [level=2] [ref=e32]
+        - generic [ref=e33]:
+          - button "Switch to dark mode" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+          - button "User menu" [ref=e38] [cursor=pointer]:
+            - img "John Doe" [ref=e39]
+            - generic [ref=e40]: John Doe
+            - img [ref=e41]
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "Dashboard" [level=1] [ref=e46]
+          - button "Add Task" [ref=e47] [cursor=pointer]
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - img [ref=e52]
+              - generic [ref=e54]: +12%
+            - paragraph [ref=e56]: "8"
+            - paragraph [ref=e57]: Total Tasks
+          - generic [ref=e58]:
+            - generic [ref=e59]:
+              - img [ref=e61]
+              - generic [ref=e63]: +5%
+            - paragraph [ref=e65]: "3"
+            - paragraph [ref=e66]: In Progress
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - img [ref=e70]
+              - generic [ref=e72]: +8%
+            - paragraph [ref=e74]: "2"
+            - paragraph [ref=e75]: Completed
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - img [ref=e79]
+              - generic [ref=e81]: "-2%"
+            - paragraph [ref=e83]: "1"
+            - paragraph [ref=e84]: Overdue
+        - generic [ref=e85]:
+          - button "All Tasks" [pressed] [ref=e86] [cursor=pointer]
+          - button "To Do" [ref=e87] [cursor=pointer]
+          - button "In Progress" [ref=e88] [cursor=pointer]
+          - button "Completed" [ref=e89] [cursor=pointer]
+          - button "Blocked" [ref=e90] [cursor=pointer]
+        - generic [ref=e91]:
+          - 'button "Task: Design new landing page" [ref=e92] [cursor=pointer]':
+            - generic [ref=e93]:
+              - heading "Design new landing page" [level=3] [ref=e94]
+              - button "Change task status from in-progress" [ref=e95]: Complete
+            - paragraph [ref=e96]: Create a modern and responsive landing page design for the product launch
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - generic [ref=e99]: High
+                - generic [ref=e100]: in progress
+              - generic [ref=e101]:
+                - img "Sarah Johnson" [ref=e102]
+                - generic [ref=e103]: Sarah Johnson
+            - generic [ref=e104]:
+              - generic [ref=e105]: "#design"
+              - generic [ref=e106]: "#frontend"
+            - generic [ref=e107]:
+              - img [ref=e108]
+              - generic [ref=e110]: Jan 23
+          - 'button "Task: Implement user authentication" [ref=e111] [cursor=pointer]':
+            - generic [ref=e112]:
+              - heading "Implement user authentication" [level=3] [ref=e113]
+              - button "Change task status from todo" [ref=e114]: Start
+            - paragraph [ref=e115]: Set up JWT-based authentication system with login and registration
+            - generic [ref=e116]:
+              - generic [ref=e117]:
+                - generic [ref=e118]: Urgent
+                - generic [ref=e119]: todo
+              - generic [ref=e120]:
+                - img "Mike Chen" [ref=e121]
+                - generic [ref=e122]: Mike Chen
+            - generic [ref=e123]:
+              - generic [ref=e124]: "#backend"
+              - generic [ref=e125]: "#security"
+            - generic [ref=e126]:
+              - img [ref=e127]
+              - generic [ref=e129]: Jan 21
+          - 'button "Task: Write API documentation" [ref=e130] [cursor=pointer]':
+            - generic [ref=e131]:
+              - heading "Write API documentation" [level=3] [ref=e132]
+              - button "Change task status from completed" [ref=e133]: Reopen
+            - paragraph [ref=e134]: Document all REST API endpoints with examples and error codes
+            - generic [ref=e135]:
+              - generic [ref=e136]:
+                - generic [ref=e137]: Medium
+                - generic [ref=e138]: completed
+              - generic [ref=e139]:
+                - img "Emily Davis" [ref=e140]
+                - generic [ref=e141]: Emily Davis
+            - generic [ref=e143]: "#documentation"
+          - 'button "Task: Fix mobile responsive issues" [ref=e144] [cursor=pointer]':
+            - generic [ref=e145]:
+              - heading "Fix mobile responsive issues" [level=3] [ref=e146]
+              - button "Change task status from in-progress" [ref=e147]: Complete
+            - paragraph [ref=e148]: Address layout problems on mobile devices for the dashboard
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - generic [ref=e151]: High
+                - generic [ref=e152]: in progress
+              - generic [ref=e153]:
+                - img "Alex Rodriguez" [ref=e154]
+                - generic [ref=e155]: Alex Rodriguez
+            - generic [ref=e156]:
+              - generic [ref=e157]: "#frontend"
+              - generic [ref=e158]: "#mobile"
+            - generic [ref=e159]:
+              - img [ref=e160]
+              - generic [ref=e162]: Jan 19 (Overdue)
+          - 'button "Task: Setup CI/CD pipeline" [ref=e163] [cursor=pointer]':
+            - generic [ref=e164]:
+              - heading "Setup CI/CD pipeline" [level=3] [ref=e165]
+              - button "Change task status from blocked" [ref=e166]: Reopen
+            - paragraph [ref=e167]: Configure automated testing and deployment pipeline
+            - generic [ref=e168]:
+              - generic [ref=e169]:
+                - generic [ref=e170]: Medium
+                - generic [ref=e171]: blocked
+              - generic [ref=e172]:
+                - img "David Kim" [ref=e173]
+                - generic [ref=e174]: David Kim
+            - generic [ref=e176]: "#devops"
+          - 'button "Task: Optimize database queries" [ref=e177] [cursor=pointer]':
+            - generic [ref=e178]:
+              - heading "Optimize database queries" [level=3] [ref=e179]
+              - button "Change task status from todo" [ref=e180]: Start
+            - paragraph [ref=e181]: Review and optimize slow database queries for better performance
+            - generic [ref=e182]:
+              - generic [ref=e183]:
+                - generic [ref=e184]: Low
+                - generic [ref=e185]: todo
+              - generic [ref=e186]:
+                - img "Lisa Wang" [ref=e187]
+                - generic [ref=e188]: Lisa Wang
+            - generic [ref=e189]:
+              - generic [ref=e190]: "#backend"
+              - generic [ref=e191]: "#performance"
+            - generic [ref=e192]:
+              - img [ref=e193]
+              - generic [ref=e195]: Jan 27
+          - 'button "Task: Create user onboarding flow" [ref=e196] [cursor=pointer]':
+            - generic [ref=e197]:
+              - heading "Create user onboarding flow" [level=3] [ref=e198]
+              - button "Change task status from in-progress" [ref=e199]: Complete
+            - paragraph [ref=e200]: Design and implement a smooth onboarding experience for new users
+            - generic [ref=e201]:
+              - generic [ref=e202]:
+                - generic [ref=e203]: High
+                - generic [ref=e204]: in progress
+              - generic [ref=e205]:
+                - img "Sarah Johnson" [ref=e206]
+                - generic [ref=e207]: Sarah Johnson
+            - generic [ref=e208]:
+              - generic [ref=e209]: "#design"
+              - generic [ref=e210]: "#ux"
+            - generic [ref=e211]:
+              - img [ref=e212]
+              - generic [ref=e214]: Jan 25
+          - 'button "Task: Add dark mode support" [ref=e215] [cursor=pointer]':
+            - generic [ref=e216]:
+              - heading "Add dark mode support" [level=3] [ref=e217]
+              - button "Change task status from completed" [ref=e218]: Reopen
+            - paragraph [ref=e219]: Implement dark mode theme across the entire application
+            - generic [ref=e220]:
+              - generic [ref=e221]:
+                - generic [ref=e222]: Medium
+                - generic [ref=e223]: completed
+              - generic [ref=e224]:
+                - img "Mike Chen" [ref=e225]
+                - generic [ref=e226]: Mike Chen
+            - generic [ref=e227]:
+              - generic [ref=e228]: "#frontend"
+              - generic [ref=e229]: "#ui"
+```

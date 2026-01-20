@@ -1,0 +1,118 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11] [cursor=pointer]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e12]: Dashboard
+          - listitem [ref=e13]:
+            - link "Tasks" [ref=e14] [cursor=pointer]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e15]: Tasks
+          - listitem [ref=e16]:
+            - link "Projects" [ref=e17] [cursor=pointer]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e18]: Projects
+          - listitem [ref=e19]:
+            - link "Team" [ref=e20] [cursor=pointer]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e21]: Team
+          - listitem [ref=e22]:
+            - link "Calendar" [ref=e23] [cursor=pointer]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e24]: Calendar
+          - listitem [ref=e25]:
+            - link "Settings" [active] [ref=e26] [cursor=pointer]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e27]: Settings
+  - generic [ref=e28]:
+    - banner [ref=e29]:
+      - generic [ref=e30]:
+        - heading "Settings" [level=2] [ref=e32]
+        - generic [ref=e33]:
+          - button "Switch to dark mode" [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+          - button "User menu" [ref=e38] [cursor=pointer]:
+            - img "John Doe" [ref=e39]
+            - generic [ref=e40]: John Doe
+            - img [ref=e41]
+    - main [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - heading "Settings" [level=1] [ref=e47]
+          - paragraph [ref=e48]: Manage your account settings and preferences
+        - tablist "Settings tabs" [ref=e49]:
+          - generic [ref=e50]:
+            - tab "Profile" [selected] [ref=e51] [cursor=pointer]:
+              - img [ref=e53]
+              - generic [ref=e55]: Profile
+            - tab "Notifications" [ref=e56] [cursor=pointer]:
+              - img [ref=e58]
+              - generic [ref=e60]: Notifications
+            - tab "Privacy" [ref=e61] [cursor=pointer]:
+              - img [ref=e63]
+              - generic [ref=e65]: Privacy
+            - tab "Appearance" [ref=e66] [cursor=pointer]:
+              - img [ref=e68]
+              - generic [ref=e70]: Appearance
+        - tabpanel "Profile" [ref=e72]:
+          - heading "Profile Settings" [level=2] [ref=e73]
+          - generic [ref=e74]:
+            - generic [ref=e75]:
+              - generic [ref=e76]:
+                - generic [ref=e77]: First Name*
+                - textbox "First Name*" [ref=e78]:
+                  - /placeholder: Enter your first name
+                  - text: John
+              - generic [ref=e79]:
+                - generic [ref=e80]: Last Name*
+                - textbox "Last Name*" [ref=e81]:
+                  - /placeholder: Enter your last name
+                  - text: Doe
+            - generic [ref=e82]:
+              - generic [ref=e83]: Email*
+              - textbox "Email*" [ref=e84]:
+                - /placeholder: your.email@example.com
+                - text: john.doe@example.com
+            - generic [ref=e85]:
+              - generic [ref=e86]: Phone
+              - textbox "Phone" [ref=e87]:
+                - /placeholder: +1 (555) 123-4567
+                - text: +1 (555) 123-4567
+            - generic [ref=e88]:
+              - generic [ref=e89]: Bio
+              - textbox "Bio" [ref=e90]:
+                - /placeholder: Tell us about yourself...
+                - text: Software engineer passionate about creating great user experiences.
+            - generic [ref=e91]:
+              - generic [ref=e92]: Location
+              - textbox "Location" [ref=e93]:
+                - /placeholder: City, Country
+                - text: San Francisco, CA
+            - generic [ref=e94]:
+              - generic [ref=e95]: Website
+              - textbox "Website" [ref=e96]:
+                - /placeholder: https://example.com
+                - text: https://johndoe.dev
+        - generic [ref=e97]:
+          - button "Cancel" [disabled] [ref=e98]
+          - button "Save Changes" [disabled] [ref=e99]
+```

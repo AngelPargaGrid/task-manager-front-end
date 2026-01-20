@@ -5,6 +5,7 @@ interface TaskCardProps {
   task: Task;
   onClick?: (taskId: string) => void;
   onStatusChange?: (taskId: string, status: TaskStatus) => void;
+  onDelete?: (taskId: string) => void;
 }
 
 const statusColors = {

@@ -174,13 +174,31 @@ export const DashboardDemo = () => {
     console.log(`Task ${taskId} status changed to ${status}`);
   };
 
+  const handleTaskDelete = (taskId: string) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+  };
+
+  const handleTaskAdd = (task: Partial<Task>) => {
+    const newTask: Task = {
+        id: Math.random().toString(36).substr(2, 9),
+        title: task.title || 'New Task',
+        description: task.description || '',
+        status: 'todo',
+        priority: 'medium',
+        createdAt: new Date().toISOString(),
+        ...task,
+    } as Task;
+    setTasks((prevTasks) => [newTask, ...prevTasks]);
+  };
+
   return (
     <Dashboard
       tasks={tasks}
       stats={stats}
       onTaskClick={handleTaskClick}
       onTaskStatusChange={handleTaskStatusChange}
+      onTaskDelete={handleTaskDelete}
+      onTaskAdd={handleTaskAdd}
     />
   );
 };
-

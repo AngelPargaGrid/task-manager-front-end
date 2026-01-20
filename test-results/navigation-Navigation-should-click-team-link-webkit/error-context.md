@@ -1,0 +1,225 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - heading "TaskManager" [level=1] [ref=e7]
+      - navigation [ref=e8]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - link "Dashboard" [ref=e11]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e13]: Dashboard
+          - listitem [ref=e14]:
+            - link "Tasks" [ref=e15]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e17]: Tasks
+          - listitem [ref=e18]:
+            - link "Projects" [ref=e19]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e21]: Projects
+          - listitem [ref=e22]:
+            - link "Team" [ref=e23]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e25]: Team
+          - listitem [ref=e26]:
+            - link "Calendar" [ref=e27]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e29]: Calendar
+          - listitem [ref=e30]:
+            - link "Settings" [ref=e31]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e34]: Settings
+  - generic [ref=e35]:
+    - banner [ref=e36]:
+      - generic [ref=e37]:
+        - heading "Team" [level=2] [ref=e39]
+        - generic [ref=e40]:
+          - button "Switch to dark mode" [ref=e41] [cursor=pointer]:
+            - img [ref=e42]
+          - button "User menu" [ref=e45] [cursor=pointer]:
+            - img "John Doe" [ref=e46]
+            - generic [ref=e47]: John Doe
+            - img [ref=e48]
+    - main [ref=e50]:
+      - generic [ref=e52]:
+        - generic [ref=e53]:
+          - heading "User Profile Component Demo" [level=1] [ref=e54]
+          - paragraph [ref=e55]: Showcasing the UserProfile component with various user scenarios
+        - generic [ref=e56]:
+          - article "Profile for John Doe" [ref=e58]:
+            - generic [ref=e60]:
+              - generic [ref=e61]:
+                - generic [ref=e62]:
+                  - img "John Doe's profile picture" [ref=e63]
+                  - generic "Verified account" [ref=e64]:
+                    - img [ref=e65]
+                - generic [ref=e67]:
+                  - button "Follow John Doe" [ref=e68] [cursor=pointer]: Follow
+                  - button "Send message to John Doe" [ref=e69] [cursor=pointer]: Message
+              - generic [ref=e70]:
+                - generic [ref=e71]:
+                  - heading "John Doe" [level=1] [ref=e72]
+                  - img "Verified account" [ref=e73]
+                - paragraph [ref=e75]: "@johndoe"
+                - paragraph [ref=e76]: Software engineer passionate about creating beautiful user experiences. 🚀 Lover of coffee, code, and cats.
+                - generic [ref=e77]:
+                  - generic [ref=e78]:
+                    - generic [ref=e79]: "156"
+                    - generic [ref=e80]: Posts
+                  - button "12.5K followers" [ref=e81] [cursor=pointer]:
+                    - generic [ref=e82]: 12.5K
+                    - generic [ref=e83]: Followers
+                  - button "342 following" [ref=e84] [cursor=pointer]:
+                    - generic [ref=e85]: "342"
+                    - generic [ref=e86]: Following
+          - article "Profile for Jane Doe" [ref=e88]:
+            - generic [ref=e90]:
+              - generic [ref=e91]:
+                - img "Jane Doe's profile picture" [ref=e93]
+                - button "Edit your profile" [ref=e95] [cursor=pointer]: Edit Profile
+              - generic [ref=e96]:
+                - heading "Jane Doe" [level=1] [ref=e98]
+                - paragraph [ref=e99]: "@janedoe"
+                - paragraph [ref=e100]: UX Designer | Building the future of digital experiences ✨ Currently working on amazing projects that push the boundaries of design.
+                - generic [ref=e101]:
+                  - generic [ref=e102]:
+                    - generic [ref=e103]: "203"
+                    - generic [ref=e104]: Posts
+                  - button "8.5K followers" [ref=e105] [cursor=pointer]:
+                    - generic [ref=e106]: 8.5K
+                    - generic [ref=e107]: Followers
+                  - button "521 following" [ref=e108] [cursor=pointer]:
+                    - generic [ref=e109]: "521"
+                    - generic [ref=e110]: Following
+          - article "Profile for Alex Smith" [ref=e112]:
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e116]:
+                  - img "Alex Smith's profile picture" [ref=e117]
+                  - generic "Verified account" [ref=e118]:
+                    - img [ref=e119]
+                - generic [ref=e121]:
+                  - button "Unfollow Alex Smith" [ref=e122] [cursor=pointer]: Following
+                  - button "Send message to Alex Smith" [ref=e123] [cursor=pointer]: Message
+              - generic [ref=e124]:
+                - generic [ref=e125]:
+                  - heading "Alex Smith" [level=1] [ref=e126]
+                  - img "Verified account" [ref=e127]
+                - paragraph [ref=e129]: "@alexsmith"
+                - paragraph [ref=e130]: Photographer 📸 | Travel enthusiast ✈️ | Sharing moments from around the world
+                - generic [ref=e131]:
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: 1.2K
+                    - generic [ref=e134]: Posts
+                  - button "342.0K followers" [ref=e135] [cursor=pointer]:
+                    - generic [ref=e136]: 342.0K
+                    - generic [ref=e137]: Followers
+                  - button "89 following" [ref=e138] [cursor=pointer]:
+                    - generic [ref=e139]: "89"
+                    - generic [ref=e140]: Following
+          - article "Profile for Tech Guru" [ref=e142]:
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - img "Tech Guru's profile picture" [ref=e147]
+                - generic [ref=e148]:
+                  - button "Follow Tech Guru" [ref=e149] [cursor=pointer]: Follow
+                  - button "Send message to Tech Guru" [ref=e150] [cursor=pointer]: Message
+              - generic [ref=e151]:
+                - heading "Tech Guru" [level=1] [ref=e153]
+                - paragraph [ref=e154]: "@techguru"
+                - paragraph [ref=e155]: Tech blogger | Early adopter | Breaking down complex tech into simple terms
+                - generic [ref=e156]:
+                  - generic [ref=e157]:
+                    - generic [ref=e158]: "567"
+                    - generic [ref=e159]: Posts
+                  - button "23.4K followers" [ref=e160] [cursor=pointer]:
+                    - generic [ref=e161]: 23.4K
+                    - generic [ref=e162]: Followers
+                  - button "1.2K following" [ref=e163] [cursor=pointer]:
+                    - generic [ref=e164]: 1.2K
+                    - generic [ref=e165]: Following
+          - article "Profile for Samantha Art" [ref=e167]:
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - img "Samantha Art's profile picture" [ref=e172]
+                - generic [ref=e173]:
+                  - button "Follow Samantha Art" [ref=e174] [cursor=pointer]: Follow
+                  - button "Send message to Samantha Art" [ref=e175] [cursor=pointer]: Message
+              - generic [ref=e176]:
+                - heading "Samantha Art" [level=1] [ref=e178]
+                - paragraph [ref=e179]: "@artlover"
+                - paragraph [ref=e180]: Digital artist creating colorful worlds 🎨 Check out my latest collection!
+                - generic [ref=e181]:
+                  - generic [ref=e182]:
+                    - generic [ref=e183]: "89"
+                    - generic [ref=e184]: Posts
+                  - button "5.6K followers" [ref=e185] [cursor=pointer]:
+                    - generic [ref=e186]: 5.6K
+                    - generic [ref=e187]: Followers
+                  - button "234 following" [ref=e188] [cursor=pointer]:
+                    - generic [ref=e189]: "234"
+                    - generic [ref=e190]: Following
+          - article "Profile for Mike Fitness" [ref=e192]:
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - generic [ref=e196]:
+                  - img "Mike Fitness's profile picture" [ref=e197]
+                  - generic "Verified account" [ref=e198]:
+                    - img [ref=e199]
+                - generic [ref=e201]:
+                  - button "Unfollow Mike Fitness" [ref=e202] [cursor=pointer]: Following
+                  - button "Send message to Mike Fitness" [ref=e203] [cursor=pointer]: Message
+              - generic [ref=e204]:
+                - generic [ref=e205]:
+                  - heading "Mike Fitness" [level=1] [ref=e206]
+                  - img "Verified account" [ref=e207]
+                - paragraph [ref=e209]: "@fitnesspro"
+                - paragraph [ref=e210]: Fitness coach 💪 | Helping you achieve your goals one workout at a time 📧 Contact for personalized training programs
+                - generic [ref=e211]:
+                  - generic [ref=e212]:
+                    - generic [ref=e213]: "892"
+                    - generic [ref=e214]: Posts
+                  - button "156.0K followers" [ref=e215] [cursor=pointer]:
+                    - generic [ref=e216]: 156.0K
+                    - generic [ref=e217]: Followers
+                  - button "456 following" [ref=e218] [cursor=pointer]:
+                    - generic [ref=e219]: "456"
+                    - generic [ref=e220]: Following
+        - generic [ref=e221]:
+          - heading "Component Features" [level=2] [ref=e222]
+          - generic [ref=e223]:
+            - generic [ref=e224]:
+              - heading "✅ Included Features" [level=3] [ref=e225]
+              - list [ref=e226]:
+                - listitem [ref=e227]: • User avatar with verified badge
+                - listitem [ref=e228]: • Display name and username
+                - listitem [ref=e229]: • Multi-line bio support
+                - listitem [ref=e230]: • Formatted stats (K/M notation)
+                - listitem [ref=e231]: • Follow/Following toggle
+                - listitem [ref=e232]: • Message button
+                - listitem [ref=e233]: • Edit profile (own profile)
+            - generic [ref=e234]:
+              - heading "✅ Technical Features" [level=3] [ref=e235]
+              - list [ref=e236]:
+                - listitem [ref=e237]: • Fully responsive design
+                - listitem [ref=e238]: • Accessible (ARIA labels, keyboard nav)
+                - listitem [ref=e239]: • TypeScript typed
+                - listitem [ref=e240]: • Loading states
+                - listitem [ref=e241]: • Smooth transitions
+                - listitem [ref=e242]: • Mobile-first approach
+                - listitem [ref=e243]: • Tailwind CSS styling
+```

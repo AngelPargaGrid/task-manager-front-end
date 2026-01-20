@@ -13,6 +13,7 @@ export interface Product {
   rating: ProductRating;
   inStock?: boolean;
   badge?: string; // e.g., "New", "Sale", "Limited"
+  category?: string;
 }
 
 export interface ProductCardProps {
@@ -21,4 +22,3 @@ export interface ProductCardProps {
   onProductClick?: (productId: string) => void;
   isLoading?: boolean;
 }
-

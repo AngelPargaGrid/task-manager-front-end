@@ -1,0 +1,122 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation "Main navigation" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "TaskManager" [level=1] [ref=e7]
+        - button "Close sidebar" [ref=e8] [cursor=pointer]:
+          - img [ref=e9]
+      - navigation [ref=e11]:
+        - list [ref=e12]:
+          - listitem [ref=e13]:
+            - link "Dashboard" [ref=e14] [cursor=pointer]:
+              - /url: /dashboard
+              - generic:
+                - img
+              - generic [ref=e16]: Dashboard
+          - listitem [ref=e17]:
+            - link "Tasks" [ref=e18] [cursor=pointer]:
+              - /url: /tasks
+              - generic:
+                - img
+              - generic [ref=e20]: Tasks
+          - listitem [ref=e21]:
+            - link "Projects" [ref=e22] [cursor=pointer]:
+              - /url: /projects
+              - generic:
+                - img
+              - generic [ref=e24]: Projects
+          - listitem [ref=e25]:
+            - link "Team" [ref=e26] [cursor=pointer]:
+              - /url: /team
+              - generic:
+                - img
+              - generic [ref=e28]: Team
+          - listitem [ref=e29]:
+            - link "Calendar" [ref=e30] [cursor=pointer]:
+              - /url: /calendar
+              - generic:
+                - img
+              - generic [ref=e32]: Calendar
+          - listitem [ref=e33]:
+            - link "Settings" [ref=e34] [cursor=pointer]:
+              - /url: /settings
+              - generic:
+                - img
+              - generic [ref=e37]: Settings
+  - generic [ref=e38]:
+    - banner [ref=e39]:
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - button "Open sidebar" [ref=e42] [cursor=pointer]:
+            - img [ref=e43]
+          - heading "Tasks" [level=2] [ref=e45]
+        - generic [ref=e46]:
+          - button "Switch to dark mode" [ref=e47] [cursor=pointer]:
+            - img [ref=e48]
+          - button "User menu" [ref=e51] [cursor=pointer]:
+            - img "John Doe" [ref=e52]
+    - main [ref=e53]:
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - heading "Task Board" [level=1] [ref=e56]
+          - button "Add Task" [ref=e57] [cursor=pointer]
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - generic [ref=e61]:
+              - heading "Blocked" [level=2] [ref=e62]
+              - generic [ref=e63]: "1"
+            - 'button "Task: Implement user authentication" [ref=e65] [cursor=pointer]':
+              - generic [ref=e66]:
+                - heading "Implement user authentication" [level=3] [ref=e67]
+                - button "Change task status from blocked" [ref=e68]: Reopen
+              - paragraph [ref=e69]: Set up JWT-based authentication system with login and registration
+              - generic [ref=e70]:
+                - generic [ref=e71]:
+                  - generic [ref=e72]: Urgent
+                  - generic [ref=e73]: blocked
+                - img "Mike Chen" [ref=e75]
+              - generic [ref=e76]:
+                - generic [ref=e77]: "#backend"
+                - generic [ref=e78]: "#security"
+              - generic [ref=e79]:
+                - img [ref=e80]
+                - generic [ref=e82]: Jan 21
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - heading "In Progress" [level=2] [ref=e85]
+              - generic [ref=e86]: "1"
+            - 'button "Task: Design new landing page" [ref=e88] [cursor=pointer]':
+              - generic [ref=e89]:
+                - heading "Design new landing page" [level=3] [ref=e90]
+                - button "Change task status from in-progress" [ref=e91]: Complete
+              - paragraph [ref=e92]: Create a modern and responsive landing page design for the product launch
+              - generic [ref=e93]:
+                - generic [ref=e94]:
+                  - generic [ref=e95]: High
+                  - generic [ref=e96]: in progress
+                - img "Sarah Johnson" [ref=e98]
+              - generic [ref=e99]:
+                - generic [ref=e100]: "#design"
+                - generic [ref=e101]: "#frontend"
+              - generic [ref=e102]:
+                - img [ref=e103]
+                - generic [ref=e105]: Jan 23
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - heading "Done" [level=2] [ref=e108]
+              - generic [ref=e109]: "1"
+            - 'button "Task: Write API documentation" [ref=e111] [cursor=pointer]':
+              - generic [ref=e112]:
+                - heading "Write API documentation" [level=3] [ref=e113]
+                - button "Change task status from completed" [ref=e114]: Reopen
+              - paragraph [ref=e115]: Document all REST API endpoints with examples and error codes
+              - generic [ref=e116]:
+                - generic [ref=e117]:
+                  - generic [ref=e118]: Medium
+                  - generic [ref=e119]: completed
+                - img "Emily Davis" [ref=e121]
+              - generic [ref=e123]: "#documentation"
+```
