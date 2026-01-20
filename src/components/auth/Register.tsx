@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../auth/useAuth';
 
 interface RegisterProps {
-  onRegister: () => void;
   onSwitchToLogin: () => void;
 }
 
-export const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin }) => {
+export const Register: React.FC<RegisterProps> = ({ onSwitchToLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const { login, status } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
@@ -26,8 +27,13 @@ export const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin 
       setError('Passwords do not match');
       return;
     }
-    // Mock register success
-    onRegister();
+    try {
+      // Mock register -> login
+      await login(email, password);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Register failed';
+      setError(message);
+    }
   };
 
   return (
@@ -113,8 +119,9 @@ export const Register: React.FC<RegisterProps> = ({ onRegister, onSwitchToLogin 
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              disabled={status === 'checking'}
             >
-              Sign up
+              {status === 'checking' ? 'Cargando...' : 'Sign up'}
             </button>
           </div>
         </form>

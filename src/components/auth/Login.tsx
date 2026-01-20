@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../auth/useAuth';
 
 interface LoginProps {
-  onLogin: () => void;
   onSwitchToRegister: () => void;
 }
 
-export const Login: React.FC<LoginProps> = ({ onLogin, onSwitchToRegister }) => {
+export const Login: React.FC<LoginProps> = ({ onSwitchToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login, status } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
-    }
-    if (password.length < 6) {
+    setError('');
+    try {
+      if (!email || !password) {
+        setError('Please fill in all fields');
+        return;
+      }
+      if (password.length < 6) {
         setError('Password must be at least 6 characters');
         return;
+      }
+      await login(email, password);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Login failed';
+      setError(message);
     }
-    // Mock login success
-    onLogin();
   };
 
   return (
@@ -77,8 +83,9 @@ export const Login: React.FC<LoginProps> = ({ onLogin, onSwitchToRegister }) => 
             <button
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              disabled={status === 'checking'}
             >
-              Sign in
+              {status === 'checking' ? 'Cargando...' : 'Sign in'}
             </button>
           </div>
         </form>

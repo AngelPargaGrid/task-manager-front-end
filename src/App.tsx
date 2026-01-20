@@ -5,21 +5,24 @@ import { ProductCardDemo } from './components/features/ProductCardDemo';
 import { UserProfileDemo } from './components/features/UserProfileDemo';
 import { TaskBoard } from './components/features/TaskBoard';
 import { ProfilePage } from './components/layout/ProfilePage';
-import type { SidebarItem, Task } from './types/dashboard.types';
+import type { SidebarItem } from './types/dashboard.types';
 import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
 import { Login } from './components/auth/Login';
 import { Register } from './components/auth/Register';
+import { AuthProvider } from './auth/AuthProvider';
+import { useAuth } from './auth/useAuth';
+import { ProtectedRoute } from './routes/ProtectedRoute';
 
 type Page = '/dashboard' | '/tasks' | '/projects' | '/team' | '/calendar' | '/settings' | '/profile';
-type AuthState = 'login' | 'register' | 'authenticated';
 
-function App() {
-  const [authState, setAuthState] = useState<AuthState>('login');
+function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
     const path = window.location.pathname;
     const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/calendar', '/settings', '/profile'];
     return validPages.includes(path as Page) ? (path as Page) : '/dashboard';
   });
+  const [authView, setAuthView] = useState<'login' | 'register'>('login');
+  const { status, user: authUser, logout } = useAuth();
 
   // Handle browser back/forward buttons
   useEffect(() => {
@@ -104,15 +107,8 @@ function App() {
     },
   ];
 
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=JohnDoe',
-    role: 'Project Manager',
-  };
-
   const handleLogout = () => {
-    setAuthState('login');
+    logout();
   };
 
   const renderPage = () => {
@@ -125,10 +121,10 @@ function App() {
         return <ProductCardDemo />;
       case '/profile':
         return <ProfilePage user={{
-            name: user.name,
-            email: user.email,
-            avatar: user.avatar,
-            role: user.role,
+            name: authUser?.name ?? 'John Doe',
+            email: authUser?.email ?? 'john.doe@example.com',
+            avatar: authUser?.avatar ?? 'https://api.dicebear.com/7.x/avataaars/svg?seed=JohnDoe',
+            role: authUser?.role ?? 'Project Manager',
             bio: "Senior Project Manager with 10+ years of experience in agile methodologies and team leadership.",
             location: "San Francisco, CA",
             website: "johndoe.design",
@@ -154,25 +150,45 @@ function App() {
     }
   };
 
-  if (authState === 'login') {
-    return <Login onLogin={() => setAuthState('authenticated')} onSwitchToRegister={() => setAuthState('register')} />;
+  if (status === 'checking') {
+    return <div className="p-8 text-center">Cargando...</div>;
   }
 
-  if (authState === 'register') {
-    return <Register onRegister={() => setAuthState('authenticated')} onSwitchToLogin={() => setAuthState('login')} />;
+  if (status === 'unauthenticated') {
+    return authView === 'login' ? (
+      <Login onSwitchToRegister={() => setAuthView('register')} />
+    ) : (
+      <Register onSwitchToLogin={() => setAuthView('login')} />
+    );
   }
-console.log(authState);
+
   return (
     <AppLayout
       sidebarItems={sidebarItems}
-      user={user}
+      user={
+        authUser ?? {
+          name: 'Guest',
+          email: '',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest',
+          role: 'Guest',
+        }
+      }
       currentPath={currentPage}
       onSidebarItemClick={handleSidebarItemClick}
       onProfileClick={handleProfileClick}
       onLogout={handleLogout}
     >
-      {renderPage()}
+      <ProtectedRoute>{renderPage()}</ProtectedRoute>
     </AppLayout>
+  );
+}
+
+// Wrap the content with the AuthProvider to share auth state across the app
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
