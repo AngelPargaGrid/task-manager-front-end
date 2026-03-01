@@ -30,8 +30,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     setStatus('checking');
-    // Simulate a network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Simulate a network delay (enough for tests to catch loading state)
+    await new Promise((resolve) => setTimeout(resolve, 400));
 
     if (!email || !password) {
       setStatus('unauthenticated');

@@ -5,17 +5,23 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
   reporter: 'html',
+  timeout: 60 * 1000, // 60s per test (includes web server startup)
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    actionTimeout: 15 * 1000,
+    navigationTimeout: 30 * 1000,
   },
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome', // Use system Chrome if Playwright browsers not installed
+      },
     },
     {
       name: 'firefox',
@@ -37,7 +43,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:5173',
-    reuseExistingServer: true, // Allow reusing existing server
+    reuseExistingServer: true,
     timeout: 120 * 1000,
   },
 });

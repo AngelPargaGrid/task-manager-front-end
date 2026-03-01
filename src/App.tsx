@@ -9,7 +9,7 @@ import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
 import { TeamDashboard } from './components/TeamDashboard/TeamDashboard';
 import { Feed } from './components/SocialFeed';
 import { Login } from './components/auth/Login';
-import { Register } from './components/auth/Register';
+import { MultiStepRegister } from './components/auth/MultiStepRegister';
 import { AuthProvider } from './auth/AuthProvider';
 import { useAuth } from './auth/useAuth';
 import { ProtectedRoute } from './routes/ProtectedRoute';
@@ -170,7 +170,7 @@ function AppContent() {
     return authView === 'login' ? (
       <Login onSwitchToRegister={() => setAuthView('register')} />
     ) : (
-      <Register onSwitchToLogin={() => setAuthView('login')} />
+      <MultiStepRegister onSwitchToLogin={() => setAuthView('login')} />
     );
   }
 
