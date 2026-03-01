@@ -1,0 +1,71 @@
+import type { KanbanTask } from './types';
+
+export const INITIAL_KANBAN_TASKS: KanbanTask[] = [
+  {
+    id: '1',
+    title: 'Design new landing page',
+    description: 'Create a modern and responsive landing page design for the product launch',
+    status: 'in-progress',
+    priority: 'high',
+    assignee: {
+      id: '1',
+      name: 'Sarah Johnson',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+    },
+    dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    tags: ['design', 'frontend'],
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: '2',
+    title: 'Implement user authentication',
+    description: 'Set up JWT-based authentication system with login and registration',
+    status: 'todo',
+    priority: 'urgent',
+    assignee: {
+      id: '2',
+      name: 'Mike Chen',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
+    },
+    dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+    tags: ['backend', 'security'],
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: '3',
+    title: 'Write API documentation',
+    description: 'Document all REST API endpoints with examples and error codes',
+    status: 'done',
+    priority: 'medium',
+    assignee: {
+      id: '3',
+      name: 'Emily Davis',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emily',
+    },
+    tags: ['documentation'],
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: '4',
+    title: 'Fix navigation bug',
+    description: 'Menu not closing on mobile when clicking outside',
+    status: 'todo',
+    priority: 'low',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: '5',
+    title: 'Set up CI/CD pipeline',
+    description: 'Configure GitHub Actions for automated testing and deployment',
+    status: 'todo',
+    priority: 'high',
+    assignee: {
+      id: '4',
+      name: 'John Doe',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=JohnDoe',
+    },
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    tags: ['devops', 'ci-cd'],
+    createdAt: new Date().toISOString(),
+  },
+];

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AppLayout } from './components/layout/AppLayout';
 import { DashboardDemo } from './components/features/DashboardDemo';
 import { ProductCardDemo } from './components/features/ProductCardDemo';
-import { TaskBoard } from './components/features/TaskBoard';
+import { KanbanBoard } from './components/KanbanBoard';
 import { ProfilePage } from './components/layout/ProfilePage';
 import type { SidebarItem } from './types/dashboard.types';
 import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
@@ -116,7 +116,7 @@ function AppContent() {
       case '/dashboard':
         return <DashboardDemo />;
       case '/tasks':
-        return <TaskBoard />;
+        return <KanbanBoard />;
       case '/projects':
         return <ProductCardDemo />;
       case '/profile':
