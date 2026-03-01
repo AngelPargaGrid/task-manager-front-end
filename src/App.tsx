@@ -7,18 +7,19 @@ import { ProfilePage } from './components/layout/ProfilePage';
 import type { SidebarItem } from './types/dashboard.types';
 import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
 import { TeamDashboard } from './components/TeamDashboard/TeamDashboard';
+import { Feed } from './components/SocialFeed';
 import { Login } from './components/auth/Login';
 import { Register } from './components/auth/Register';
 import { AuthProvider } from './auth/AuthProvider';
 import { useAuth } from './auth/useAuth';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 
-type Page = '/dashboard' | '/tasks' | '/projects' | '/team' | '/calendar' | '/settings' | '/profile';
+type Page = '/dashboard' | '/tasks' | '/projects' | '/team' | '/feed' | '/calendar' | '/settings' | '/profile';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState<Page>(() => {
     const path = window.location.pathname;
-    const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/calendar', '/settings', '/profile'];
+    const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/feed', '/calendar', '/settings', '/profile'];
     return validPages.includes(path as Page) ? (path as Page) : '/dashboard';
   });
   const [authView, setAuthView] = useState<'login' | 'register'>('login');
@@ -28,7 +29,7 @@ function AppContent() {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;
-      const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/calendar', '/settings', '/profile'];
+      const validPages: Page[] = ['/dashboard', '/tasks', '/projects', '/team', '/feed', '/calendar', '/settings', '/profile'];
       if (validPages.includes(path as Page)) {
         setCurrentPage(path as Page);
       }
@@ -87,6 +88,15 @@ function AppContent() {
       ),
     },
     {
+      label: 'Feed',
+      href: '/feed',
+      icon: (
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+        </svg>
+      ),
+    },
+    {
       label: 'Calendar',
       href: '/calendar',
       icon: (
@@ -132,6 +142,8 @@ function AppContent() {
         }} />;
       case '/team':
         return <TeamDashboard />;
+      case '/feed':
+        return <Feed />;
       case '/calendar':
         return (
           <div className="p-8 text-center">
