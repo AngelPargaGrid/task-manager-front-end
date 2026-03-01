@@ -8,6 +8,13 @@
   }
 }
 
+/* Recharts tooltip dark mode */
+.dark .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: rgb(31 41 55) !important;
+  border-color: rgb(75 85 99) !important;
+  color: rgb(243 244 246);
+}
+
 @layer utilities {
   @keyframes fade-in {
     from {

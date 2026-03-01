@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { AppLayout } from './components/layout/AppLayout';
 import { DashboardDemo } from './components/features/DashboardDemo';
 import { ProductCardDemo } from './components/features/ProductCardDemo';
-import { UserProfileDemo } from './components/features/UserProfileDemo';
 import { TaskBoard } from './components/features/TaskBoard';
 import { ProfilePage } from './components/layout/ProfilePage';
 import type { SidebarItem } from './types/dashboard.types';
 import { SettingsPanelDemo } from './components/features/SettingsPanelDemo';
+import { TeamDashboard } from './components/TeamDashboard/TeamDashboard';
 import { Login } from './components/auth/Login';
 import { Register } from './components/auth/Register';
 import { AuthProvider } from './auth/AuthProvider';
@@ -131,7 +131,7 @@ function AppContent() {
             joinDate: "March 2023"
         }} />;
       case '/team':
-        return <UserProfileDemo />;
+        return <TeamDashboard />;
       case '/calendar':
         return (
           <div className="p-8 text-center">
@@ -166,12 +166,19 @@ function AppContent() {
     <AppLayout
       sidebarItems={sidebarItems}
       user={
-        authUser ?? {
-          name: 'Guest',
-          email: '',
-          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest',
-          role: 'Guest',
-        }
+        authUser
+          ? {
+              name: authUser.name,
+              email: authUser.email,
+              avatar: authUser.avatar ?? 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest',
+              role: authUser.role,
+            }
+          : {
+            name: 'Guest',
+            email: '',
+            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Guest',
+            role: 'Guest',
+          }
       }
       currentPath={currentPage}
       onSidebarItemClick={handleSidebarItemClick}
