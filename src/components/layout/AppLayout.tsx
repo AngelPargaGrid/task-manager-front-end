@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { SidebarItem } from '../../types/dashboard.types';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -26,36 +27,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   onLogout,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  
   const userMenuRef = useRef<HTMLDivElement>(null);
-
-  // Initialize dark mode from localStorage or system preference
-  useEffect(() => {
-    const stored = localStorage.getItem('darkMode');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = stored ? stored === 'true' : prefersDark;
-    setIsDarkMode(shouldBeDark);
-    updateDarkMode(shouldBeDark);
-  }, []);
-
-  // Update dark mode class on document
-  const updateDarkMode = (dark: boolean) => {
-    if (dark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  // Toggle dark mode
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem('darkMode', String(newMode));
-    updateDarkMode(newMode);
-  };
+  const { isDark: isDarkMode, toggleTheme: toggleDarkMode } = useTheme();
 
   // Close user menu when clicking outside
   useEffect(() => {

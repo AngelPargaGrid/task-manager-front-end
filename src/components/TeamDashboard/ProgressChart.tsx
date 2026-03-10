@@ -94,19 +94,46 @@ export const ProgressChart: React.FC<ProgressChartProps> = ({
       {milestones.length > 0 && (
         <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
           <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
-            Milestones
+            Milestones Timeline
           </h3>
-          <div className="space-y-2">
-            {milestones.map((m) => (
-              <div key={m.id} className="flex items-center justify-between">
-                <span className="text-sm text-gray-700 dark:text-gray-300">
-                  {m.title}
-                </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {m.dueDate} {m.completed ? '✓' : ''}
-                </span>
-              </div>
-            ))}
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-gray-200 dark:bg-gray-600 rounded-full" />
+            <div className="space-y-4">
+              {milestones.map((m) => (
+                <div key={m.id} className="relative flex items-start gap-4 pl-10">
+                  <div
+                    className={`absolute left-2 w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      m.completed
+                        ? 'bg-green-500 border-green-500 dark:bg-green-600 dark:border-green-600'
+                        : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    {m.completed && (
+                      <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">
+                        {m.title}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 shrink-0">
+                        {m.dueDate}
+                      </span>
+                    </div>
+                    <div className="mt-1 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-blue-500 dark:bg-blue-400 transition-all duration-500"
+                        style={{ width: `${m.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

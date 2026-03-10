@@ -11,6 +11,7 @@ import { Feed } from './components/SocialFeed';
 import { Login } from './components/auth/Login';
 import { MultiStepRegister } from './components/auth/MultiStepRegister';
 import { AuthProvider } from './auth/AuthProvider';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { useAuth } from './auth/useAuth';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 
@@ -205,9 +206,11 @@ function AppContent() {
 // Wrap the content with the AuthProvider to share auth state across the app
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

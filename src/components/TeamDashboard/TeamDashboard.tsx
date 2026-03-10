@@ -151,9 +151,11 @@ export const TeamDashboard: React.FC = () => {
   const [milestones] = useState<Milestone[]>(initialMilestones);
 
   const handleCompleteTask = useCallback((projectId: string) => {
+    let projectName: string | null = null;
     setProjects((prev) =>
       prev.map((p) => {
         if (p.id !== projectId) return p;
+        projectName = p.name;
         const completed = Math.min(p.completedTasks + 1, p.totalTasks);
         const progress = Math.round((completed / p.totalTasks) * 100);
         return { ...p, completedTasks: completed, progress };
@@ -166,14 +168,13 @@ export const TeamDashboard: React.FC = () => {
           : m
       )
     );
-    const project = projects.find((p) => p.id === projectId);
     const user = teamMembers[0];
-    if (project && user) {
+    if (projectName && user) {
       setActivities((a) =>
-        addActivity(a, 'task_completed', `Completed a task in "${project.name}"`, user)
+        addActivity(a, 'task_completed', `Completed a task in "${projectName}"`, user)
       );
     }
-  }, [projects, teamMembers]);
+  }, [teamMembers]);
 
   const handleAddTeamMember = useCallback(() => {
     const newMember: TeamMember = {
@@ -250,8 +251,8 @@ export const TeamDashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <header className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             Task Management Dashboard
@@ -275,15 +276,15 @@ export const TeamDashboard: React.FC = () => {
             onCompleteTask={handleCompleteTask}
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="lg:col-span-2 space-y-6 lg:space-y-8 order-2 lg:order-1">
               <ProgressChart
                 projects={projects}
                 milestones={milestones}
               />
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-6 lg:space-y-8 order-1 lg:order-2">
               <TeamMembers
                 members={teamMembers}
                 onContact={handleContact}
