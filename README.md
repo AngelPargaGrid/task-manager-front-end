@@ -1,153 +1,163 @@
-# React + TypeScript + Vite
+# Customer Support Full-Stack Application
 
-Aplicación frontend modular con autenticación, dashboard, Kanban board, feed social y soporte para dark mode.
+Full-stack application with React frontend and Flask backend: authentication, dashboard, Kanban board, social feed, and customer support features.
 
-## Stack Tecnológico
+## Tech Stack
 
-- **React 19** + **TypeScript**
-- **Vite 7** — Build tool
-- **Tailwind CSS** — Estilos y dark mode
+**Frontend**
+- **React 19** + **TypeScript** + **Vite 7**
+- **Tailwind CSS** — Styling, dark mode
 - **@dnd-kit** — Drag and drop (Kanban)
-- **Recharts** — Gráficas
-- **Playwright** — Tests E2E
+- **Recharts** — Charts
+- **Playwright** — E2E tests
+- **Vitest** — Unit tests
+
+**Backend**
+- **Flask** — REST API (see `api/` for details)
+- **SQLAlchemy** — ORM
+- **Flask-JWT-Extended** — Authentication
+
+## Quick Start
+
+```bash
+npm install
+npm run dev          # Frontend at http://localhost:5173
+cd api && pip install -r requirements.txt && python run.py   # API at http://localhost:5001
+```
 
 ---
 
-## Arquitectura
+## Architecture
 
-### Estructura del Proyecto
+### Project Structure
 
 ```
-src/
-├── App.tsx                 # Punto de entrada principal, rutas y layout
-├── main.tsx                # Renderizado raíz (StrictMode)
-├── index.css               # Estilos globales + Tailwind
+├── src/                    # Frontend (React)
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── index.css
+│   ├── auth/
+│   │   ├── AuthProvider.tsx
+│   │   ├── AuthContext.tsx
+│   │   ├── useAuth.ts
+│   │   └── auth.types.ts
+│   ├── components/
+│   │   ├── auth/
+│   │   ├── features/
+│   │   ├── KanbanBoard/
+│   │   ├── layout/
+│   │   ├── shared/
+│   │   ├── TeamDashboard/
+│   │   ├── SocialFeed/
+│   │   └── ui/
+│   ├── contexts/
+│   ├── routes/
+│   ├── types/
+│   └── data/
 │
-├── auth/                   # Autenticación
-│   ├── AuthProvider.tsx    # Proveedor de contexto de auth
-│   ├── AuthContext.tsx     # Contexto y estado de sesión
-│   ├── useAuth.ts          # Hook para consumir auth
-│   └── auth.types.ts       # Tipos de autenticación
+├── api/                    # Backend (Flask)
+│   ├── app/                # Routes, models, schemas
+│   ├── tests/
+│   └── requirements.txt
 │
-├── components/
-│   ├── auth/               # Login, registro multistep
-│   ├── features/           # Pantallas/features principales
-│   │   ├── DashboardDemo.tsx
-│   │   ├── ProductCardDemo.tsx
-│   │   ├── SettingsPanelDemo.tsx
-│   │   └── ...
-│   ├── KanbanBoard/        # Módulo Kanban completo
-│   │   ├── KanbanBoard.tsx
-│   │   ├── BoardColumn.tsx
-│   │   ├── TaskCard.tsx
-│   │   ├── AddTaskModal.tsx
-│   │   ├── EditTaskModal.tsx
-│   │   ├── types.ts
-│   │   ├── initialTasks.ts
-│   │   └── kanbanAssignees.ts
-│   ├── layout/             # Layout, sidebar, profile
-│   │   ├── AppLayout.tsx
-│   │   ├── ProfilePage.tsx
-│   │   └── ...
-│   ├── shared/             # Componentes reutilizables
-│   │   ├── Avatar.tsx
-│   │   ├── Badge.tsx
-│   │   └── Card.tsx
-│   ├── TeamDashboard/      # Dashboard de equipo
-│   ├── SocialFeed/         # Feed, posts, comentarios
-│   └── ui/                 # Componentes UI base
-│       ├── Button.tsx
-│       ├── FormInput.tsx
-│       ├── ToggleSwitch.tsx
-│       └── ...
+├── qa-automation/          # QA framework
+│   ├── tests/              # Unit, E2E pages (POM)
+│   ├── quality/            # ESLint, Pylint, Sonar
+│   ├── security/           # OWASP ZAP, Snyk
+│   ├── performance/        # k6, Lighthouse
+│   └── reports/            # Dashboard, report generation
 │
-├── contexts/
-│   └── ThemeContext.tsx    # Tema light/dark
-│
-├── routes/
-│   └── ProtectedRoute.tsx  # HOC para rutas protegidas
-│
-├── types/                  # Tipos globales
-│   ├── dashboard.types.ts
-│   ├── product.types.ts
-│   ├── user.types.ts
-│   └── ...
-│
-└── data/                   # Datos de ejemplo
-    └── sampleUsers.ts
+└── tests/                  # Playwright E2E specs
 ```
 
-### Patrones de Diseño
+### Design Patterns
 
-| Área | Implementación |
+| Area | Implementation |
 |------|----------------|
 | **State** | `useState` local + Context (Auth, Theme) |
-| **Persistencia** | `localStorage` (tema, tareas Kanban, sesión simulada) |
-| **Routing** | `pushState` / `popstate` (SPA sin React Router) |
-| **Componentes** | Composición, props drilling donde aplica |
+| **Persistence** | `localStorage` (theme, Kanban tasks, session) |
+| **Routing** | `pushState` / `popstate` (SPA) |
+| **Components** | Composition, props where appropriate |
 
-### Flujo de la Aplicación
+### Application Flow
 
 ```
-main.tsx
-  └── App
-        └── ThemeProvider
-              └── AuthProvider
-                    └── AppContent
-                          ├── [No autenticado] → Login / MultiStepRegister
-                          └── [Autenticado]   → AppLayout (sidebar + contenido)
-                                                ├── ProtectedRoute
-                                                └── renderPage() por ruta:
-                                                    /dashboard  → DashboardDemo
-                                                    /tasks      → KanbanBoard
-                                                    /projects   → ProductCardDemo
-                                                    /team       → TeamDashboard
-                                                    /feed       → Feed (SocialFeed)
-                                                    /settings   → SettingsPanelDemo
-                                                    /profile    → ProfilePage
+main.tsx → App → ThemeProvider → AuthProvider → AppContent
+  ├── [Unauthenticated] → Login / MultiStepRegister
+  └── [Authenticated]   → AppLayout (sidebar + content)
+       └── ProtectedRoute → renderPage(): /dashboard, /tasks, /projects, /team, /feed, /settings, /profile
 ```
 
-### Módulo Kanban (Arquitectura)
+### Kanban Module
 
-- **KanbanBoard**: Contenedor principal, DndContext, filtros, búsqueda, modales
-- **BoardColumn**: Columnas droppables (useDroppable) con SortableContext
-- **TaskCard**: Tarjetas sortables (useSortable) con metadatos
-- **AddTaskModal / EditTaskModal**: CRUD de tareas con asignación
-- **Estado**: `useState` + `localStorage` para persistencia
+- **KanbanBoard**: Main container, DndContext, filters, search, modals
+- **BoardColumn**: Droppable columns (useDroppable) with SortableContext
+- **TaskCard**: Sortable cards (useSortable)
+- **AddTaskModal / EditTaskModal**: Task CRUD
+- **State**: `useState` + `localStorage`
 
-### Tema (Dark Mode)
+### Dark Mode
 
-- `ThemeContext` sincroniza con `localStorage` y `prefers-color-scheme`
-- Tailwind: clases `dark:` para estilos en modo oscuro
-- `document.documentElement.classList` para `class="dark"` en HTML
+- `ThemeContext` syncs with `localStorage` and `prefers-color-scheme`
+- Tailwind `dark:` classes
 
 ---
 
 ## Scripts
 
-| Comando | Descripción |
+| Command | Description |
 |---------|-------------|
-| `npm run dev` | Servidor de desarrollo |
-| `npm run build` | Build de producción |
-| `npm run preview` | Preview del build |
-| `npm run test` | Tests Playwright |
-| `npm run test:register` | Tests del formulario de registro |
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build |
+| `npm run test` | Playwright E2E tests |
+| `npm run test:unit` | Vitest unit tests |
+| `npm run test:register` | Registration form tests |
 | `npm run lint` | ESLint |
+| `npm run qa` | Full QA suite (lint, tests, security, report) |
+| `npm run qa:report` | Generate QA report |
+| `npm run qa:analyze` | AI improvement recommendations |
+
+**Backend:** `cd api && python run.py` — API on `http://localhost:5001`
 
 ---
 
-## Tests
+## Testing
 
-Tests E2E con Playwright en `tests/` (ej. `register.spec.ts` para el formulario multistep).
+| Type | Tool | Location |
+|------|------|----------|
+| E2E | Playwright | `tests/` |
+| E2E (POM) | Playwright + Page Objects | `qa-automation/tests/e2e/pages/` |
+| Frontend unit | Vitest | `qa-automation/tests/unit/frontend/` |
+| Backend | pytest | `api/tests/` |
+
+---
+
+## QA Automation
+
+Full QA suite with code quality, security scanning, performance tests, and dashboard:
+
+```bash
+npm run qa
+open qa-automation/reports/dashboard.html
+```
+
+See [qa-automation/QA_SUITE_DOCUMENTATION.md](qa-automation/QA_SUITE_DOCUMENTATION.md) for details.
+
+---
+
+## CI/CD
+
+GitHub Actions workflow in `.github/workflows/ci.yml` — build, test, security scan, deploy.
+
+See [.github/WORKFLOWS_GUIDE.md](.github/WORKFLOWS_GUIDE.md) for pipeline documentation.
 
 ---
 
 ## React Compiler
 
-El React Compiler no está habilitado por defecto por impacto en rendimiento. Ver [documentación](https://react.dev/learn/react-compiler/installation).
-
----
+React Compiler is not enabled by default. See [documentation](https://react.dev/learn/react-compiler/installation).
 
 ## ESLint
 
-Para reglas más estrictas (type-aware), ver la documentación en el archivo de configuración de ESLint.
+For stricter (type-aware) rules, see the ESLint configuration file.
