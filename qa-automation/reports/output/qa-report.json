@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-03-11T19:25:51.245854Z",
+  "project": "Customer Support Full-Stack",
+  "summary": {
+    "passed": 0,
+    "failed": 0,
+    "warnings": 0,
+    "skipped": 0
+  },
+  "sections": {
+    "pytest": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0
+    },
+    "thresholds": {
+      "description": "Quality gates for performance tests",
+      "api": {
+        "p95_response_ms": 500,
+        "p99_response_ms": 1000,
+        "error_rate_max": 0.01,
+        "rps_min": 10
+      },
+      "frontend": {
+        "lighthouse_performance_min": 0.7,
+        "lighthouse_accessibility_min": 0.8,
+        "lcp_ms_max": 2500,
+        "fid_ms_max": 100,
+        "cls_max": 0.1
+      }
+    }
+  }
+}

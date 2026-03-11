@@ -1,0 +1,28 @@
+{
+  "recommendations": [
+    {
+      "priority": "high",
+      "category": "tests",
+      "message": "Backend tests have failures. Review pytest output and fix before merge.",
+      "action": "Run: cd api && pytest tests/ -v"
+    },
+    {
+      "priority": "low",
+      "category": "quality",
+      "message": "Run ESLint in CI to catch code quality issues.",
+      "action": "npm run lint"
+    },
+    {
+      "priority": "medium",
+      "category": "performance",
+      "message": "Add Lighthouse CI to track Core Web Vitals.",
+      "action": "npx @lhci/cli@0.13.x autorun"
+    },
+    {
+      "priority": "low",
+      "category": "coverage",
+      "message": "Ensure pytest coverage reports are generated (--cov).",
+      "action": "pytest --cov=app --cov-report=html api/tests/"
+    }
+  ]
+}

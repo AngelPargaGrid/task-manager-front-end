@@ -1,0 +1,23 @@
+[MASTER]
+ignore=venv,__pycache__,.pytest_cache,node_modules
+jobs=0
+
+[MESSAGES CONTROL]
+disable=C0111,C0103,R0903,R0913
+# C0111: missing-docstring
+# C0103: invalid-name
+# R0903: too-few-public-methods
+# R0913: too-many-arguments
+
+[FORMAT]
+max-line-length=120
+
+[BASIC]
+good-names=i,j,k,ex,_,id,db,app,flask_app
+
+[DESIGN]
+max-args=10
+max-attributes=15
+
+[TYPECHECK]
+ignored-modules=flask_marshmallow,marshmallow_sqlalchemy

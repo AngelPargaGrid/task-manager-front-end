@@ -1,0 +1,20 @@
+# OWASP ZAP configuration for security scanning
+# Run: zap-baseline.py -t https://localhost:5173 -c zap-config.yaml
+# Or: docker run -v $(pwd):/zap owasp/zap2docker-stable zap-baseline.py -t https://your-app -c /zap/qa-automation/security/zap-config.yaml
+
+env:
+  config:
+    failOnHigh: true
+    failOnMedium: false
+    failOnLow: false
+    failOnInformational: false
+    reportTitle: "QA Automation - OWASP ZAP Scan"
+    scanRuleFile: ""
+
+rules:
+  - id: 40012
+    action: IGNORE
+    # Ignore: X-Content-Type-Options header missing (often handled by framework)
+  - id: 90033
+    action: IGNORE
+    # Ignore: Loosely scoped cookies (dev mode)

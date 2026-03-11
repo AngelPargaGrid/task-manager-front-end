@@ -1,0 +1,12 @@
+# Snyk configuration for dependency and code vulnerability scanning
+# Run: snyk test
+# Run: snyk test --file=api/requirements.txt (Python)
+# Run: snyk code test (SAST - requires Snyk Code)
+
+version: v1.25.0
+
+patch: {}
+
+exclude:
+  global:
+    - SNYK-JS-*: Low severity for dev deps in CI
