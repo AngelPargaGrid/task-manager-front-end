@@ -117,6 +117,10 @@ def create_app(config_name: str = "development") -> Flask:
         blog_post,
         blog_comment,
         blog_category,
+        product,
+        cart,
+        discount,
+        order,
     )
 
     with flask_app.app_context():

@@ -9,6 +9,10 @@ from app.models.notification import Notification
 from app.models.blog_post import BlogPost
 from app.models.blog_comment import BlogComment
 from app.models.blog_category import BlogCategory
+from app.models.product import Product
+from app.models.discount import DiscountCode
+from app.models.cart import Cart, CartItem
+from app.models.order import Order, OrderItem
 
 __all__ = [
     "User",
@@ -20,4 +24,10 @@ __all__ = [
     "BlogPost",
     "BlogComment",
     "BlogCategory",
+    "Product",
+    "DiscountCode",
+    "Cart",
+    "CartItem",
+    "Order",
+    "OrderItem",
 ]

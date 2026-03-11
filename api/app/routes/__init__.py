@@ -8,6 +8,7 @@ from app.routes.admin import ns as admin_ns
 from app.routes.tasks import ns as tasks_ns
 from app.routes.projects import ns as projects_ns
 from app.routes.blog import blog_ns
+from app.routes.checkout import ns as checkout_ns
 
 
 def register_blueprints(api):
@@ -20,3 +21,4 @@ def register_blueprints(api):
     api.add_namespace(tasks_ns, path="/tasks")
     api.add_namespace(projects_ns, path="/projects")
     api.add_namespace(blog_ns, path="/blog")
+    api.add_namespace(checkout_ns, path="/checkout")
