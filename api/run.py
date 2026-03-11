@@ -2,9 +2,16 @@
 
 import os
 
-from app import create_app
+from app import create_app, socketio
 
-app = create_app(os.getenv("FLASK_ENV", "development"))
+flask_app = create_app(os.getenv("FLASK_ENV", "development"))
+app = flask_app  # For FLASK_APP=run:app
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5001)), debug=True)
+    socketio.run(
+        flask_app,
+        host="0.0.0.0",
+        port=int(os.getenv("PORT", 5001)),
+        debug=True,
+        allow_unsafe_werkzeug=True,  # For development without eventlet
+    )
