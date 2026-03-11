@@ -8,16 +8,36 @@ from app import create_app, db
 @pytest.fixture
 def app():
     """Create application for testing."""
-    return create_app("testing")
+    app = create_app("testing")
+    with app.app_context():
+        db.create_all()
+        yield app
+        db.drop_all()
 
 
 @pytest.fixture
 def client(app):
     """Create test client with database initialized."""
-    with app.test_client() as client:
-        with app.app_context():
-            db.create_all()
-            yield client
+    return app.test_client()
+
+
+@pytest.fixture
+def auth_headers(client):
+    """Register and login, return Authorization headers for authenticated requests."""
+    client.post(
+        "/api/v1/auth/register",
+        json={
+            "name": "Test User",
+            "email": "test@example.com",
+            "password": "password123",
+        },
+    )
+    response = client.post(
+        "/api/v1/auth/login",
+        json={"email": "test@example.com", "password": "password123"},
+    )
+    token = response.get_json().get("access_token")
+    return {"Authorization": f"Bearer {token}"}
 
 
 @pytest.fixture

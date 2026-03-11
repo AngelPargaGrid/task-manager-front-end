@@ -222,6 +222,30 @@ def test_subject_too_short_returns_400(client, customer):
     assert resp.status_code == 400
 
 
+def test_invalid_task_data(client, auth_headers):
+    """Create task with empty title returns 400 with errors."""
+    response = client.post(
+        "/api/v1/tasks/",
+        headers=auth_headers,
+        json={"title": ""},
+    )
+    assert response.status_code == 400
+    data = response.get_json()
+    assert "errors" in data
+
+
+def test_invalid_task_missing_title(client, auth_headers):
+    """Create task without title returns 400."""
+    response = client.post(
+        "/api/v1/tasks/",
+        headers=auth_headers,
+        json={"description": "No title provided"},
+    )
+    assert response.status_code == 400
+    data = response.get_json()
+    assert "errors" in data
+
+
 def test_status_transition_validation(client, customer, agent):
     """Invalid status transition returns 400."""
     create_resp = client.post(

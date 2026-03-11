@@ -150,13 +150,29 @@ cd api
 pytest tests/ -v
 ```
 
-Run with coverage (task module 90%+):
+Run with coverage:
 
 ```bash
-pytest tests/ --cov=app.routes.tasks --cov=app.models.task --cov=app.tasks --cov=app.celery_app --cov-report=term-missing -q
+pytest tests/ --cov=app --cov-report=html
+pytest tests/ --cov=app --cov-report=term-missing
 ```
 
-Tests cover: validation, auth, task CRUD, caching, Celery background tasks, report generation.
+Run specific test files:
+
+```bash
+pytest tests/test_auth.py -v
+pytest tests/test_tasks.py -v
+pytest tests/test_validation.py -v
+pytest tests/test_performance.py -v
+```
+
+Skip performance benchmarks (faster runs):
+
+```bash
+pytest tests/ -m "not performance" -v
+```
+
+Tests cover: auth (registration, login, me), tasks (CRUD, projects, reports, caching), validation (tickets, tasks), performance benchmarks.
 
 ## Performance Features
 
