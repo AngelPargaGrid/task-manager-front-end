@@ -73,19 +73,3 @@ export default defineConfig([
 ```
 
 
-
-
-## TODO: https://learning.griddynamics.com/#/online-course-player/08cac411-b23b-4e3e-87dd-afe36ba4aa12
-## me quede en la implementacion de Testing with Playwright, en el promt
-
-###y tengo este prompt pendiente
-Student Exercise 6: Test Form Validation
-
-Objective: Create comprehensive tests for a multi-step form.
-
-Suggested Prompt:
-
-
-Create Playwright tests for a multi-step registration form. Test field validation, 
-navigation between steps, form submission, error messages, and success state. 
-Include accessibility checks for form labels and error announcements.
