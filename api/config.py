@@ -18,8 +18,11 @@ class Config:
 
     # JWT
     JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or "dev-secret-key-change-in-production"
-    JWT_ACCESS_TOKEN_EXPIRES = 3600  # 1 hour
+    JWT_ACCESS_TOKEN_EXPIRES = 86400  # 24 hours (PRD NFR-006)
     JWT_REFRESH_TOKEN_EXPIRES = 86400 * 7  # 7 days
+
+    # Rate limiting (PRD NFR-007: 100 req/min per user)
+    RATELIMIT_DEFAULT = "100 per minute"
 
 
 class DevelopmentConfig(Config):

@@ -1,6 +1,6 @@
-# Task Management API
+# Customer Support Ticket API
 
-Comprehensive REST API for a task management system with JWT authentication, task CRUD, project management, team collaboration, and real-time notifications.
+REST API for a customer support ticket management system with JWT authentication, ticket CRUD, assignment, status tracking, priority management, comments, and admin dashboard. Built from PRD_Customer_Support_System.txt.
 
 ## Stack
 
@@ -9,33 +9,37 @@ Comprehensive REST API for a task management system with JWT authentication, tas
 - **Marshmallow** - Serialization & validation
 - **Flask-JWT-Extended** - JWT authentication
 - **Flask-RESTX** - REST API + Swagger UI
-- **Flask-SocketIO** - Real-time WebSocket notifications
+- **Flask-Limiter** - Rate limiting
+- **bcrypt** - Password hashing (cost factor 12)
 
 ## Project Structure
 
 ```
 api/
 ├── app/
-│   ├── __init__.py       # App factory, extensions
+│   ├── __init__.py       # App factory, error handlers, extensions
+│   ├── exceptions.py     # Custom API exceptions
 │   ├── models/
-│   │   ├── user.py
-│   │   ├── task.py
-│   │   ├── project.py
-│   │   └── notification.py
+│   │   ├── user.py       # User (customer, agent, admin)
+│   │   ├── ticket.py     # Support ticket
+│   │   ├── comment.py    # Ticket comments
+│   │   ├── assignment.py # Assignment history
+│   │   └── attachment.py # File attachments
 │   ├── routes/
-│   │   ├── auth.py       # Register, login, refresh, me
-│   │   ├── users.py
-│   │   ├── tasks.py      # Task CRUD
-│   │   ├── projects.py   # Projects + team members
-│   │   └── notifications.py
-│   ├── schemas/          # Marshmallow validation
-│   ├── socketio_events.py # WebSocket handlers
+│   │   ├── auth.py       # Register, login, logout, me
+│   │   ├── tickets.py    # Tickets + comments
+│   │   ├── users.py      # User management (admin)
+│   │   ├── agents.py     # Agent list, tickets, availability
+│   │   └── admin.py      # Dashboard, reports
+│   ├── schemas/         # Marshmallow validation
 │   └── utils/
+│       ├── security.py   # sanitize_input, role_required
+│       └── ticket_utils.py
+├── tests/
+│   └── test_validation.py
 ├── config.py
-├── instance/              # SQLite DB
-├── requirements.txt
 ├── run.py
-└── .env.example
+└── requirements.txt
 ```
 
 ## Setup
@@ -55,25 +59,8 @@ Create `.env` from `.env.example` and set `SECRET_KEY`, `JWT_SECRET_KEY`.
 python run.py
 ```
 
-Or use a different port if 5001 is in use:
-
-```bash
-PORT=5000 python run.py
-```
-
-- **API base:** `http://localhost:5001/api/v1` (or the port you specify)
+- **API base:** `http://localhost:5001/api/v1`
 - **Swagger UI:** `http://localhost:5001/swagger`
-- **WebSocket:** `ws://localhost:5001/socket.io` (connect with `?token=<jwt>`)
-
-Use `PORT=5000` if 5001 is in use.
-
-## Migrations
-
-```bash
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
-```
 
 ## Endpoints
 
@@ -81,97 +68,72 @@ flask db upgrade
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| POST | `/api/v1/auth/register` | No | Register user |
-| POST | `/api/v1/auth/login` | No | Login, returns JWT |
-| POST | `/api/v1/auth/refresh` | Refresh | Refresh access token |
-| GET | `/api/v1/auth/me` | Yes | Current user |
+| POST | `/auth/register` | No | Register (name, email, password, role) |
+| POST | `/auth/login` | No | Login, returns JWT |
+| POST | `/auth/logout` | Yes | Logout |
+| POST | `/auth/refresh` | Refresh | Refresh access token |
+| GET | `/auth/me` | Yes | Current user |
 
-### Users
-
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/v1/users/` | Yes | List users |
-| GET | `/api/v1/users/<id>` | Yes | Get user by ID |
-
-### Tasks
+### Tickets
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| GET | `/api/v1/tasks/` | Yes | List tasks (filter: status, project_id, priority) |
-| POST | `/api/v1/tasks/` | Yes | Create task |
-| GET | `/api/v1/tasks/<id>` | Yes | Get task |
-| PUT | `/api/v1/tasks/<id>` | Yes | Update task |
-| DELETE | `/api/v1/tasks/<id>` | Yes | Delete task |
+| GET | `/tickets/` | Yes | List tickets (filters: status, priority, category, search) |
+| POST | `/tickets/` | Yes | Create ticket (rate limited 10/min) |
+| GET | `/tickets/<id>` | Yes | Get ticket |
+| PUT | `/tickets/<id>` | Yes | Update ticket |
+| DELETE | `/tickets/<id>` | Admin | Delete ticket |
+| PUT | `/tickets/<id>/status` | Yes | Update status (validated transitions) |
+| PUT | `/tickets/<id>/priority` | Agent/Admin | Update priority |
+| POST | `/tickets/<id>/assign` | Admin | Assign to agent |
+| GET | `/tickets/<id>/history` | Yes | Assignment history |
+| GET | `/tickets/<id>/comments` | Yes | List comments |
+| POST | `/tickets/<id>/comments` | Yes | Add comment |
 
-**Task fields:** `title`, `description`, `status` (pending|in_progress|completed), `priority` (low|medium|high|urgent), `project_id`, `assignee_id`, `due_date`
-
-### Projects
-
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/api/v1/projects/` | Yes | List projects |
-| POST | `/api/v1/projects/` | Yes | Create project |
-| GET | `/api/v1/projects/<id>` | Yes | Get project |
-| PUT | `/api/v1/projects/<id>` | Yes | Update project |
-| DELETE | `/api/v1/projects/<id>` | Yes | Delete project |
-| GET | `/api/v1/projects/<id>/tasks` | Yes | List project tasks |
-| GET | `/api/v1/projects/<id>/members` | Yes | List project members |
-| POST | `/api/v1/projects/<id>/members` | Yes | Add member |
-| PUT | `/api/v1/projects/<id>/members/<user_id>` | Yes | Update member role |
-| DELETE | `/api/v1/projects/<id>/members/<user_id>` | Yes | Remove member |
-
-**Member roles:** `owner`, `member`, `viewer`
-
-### Notifications
+### Users & Agents
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| GET | `/api/v1/notifications/` | Yes | List notifications (?unread=true) |
-| GET | `/api/v1/notifications/<id>` | Yes | Get notification |
-| PATCH | `/api/v1/notifications/<id>` | Yes | Mark as read |
-| POST | `/api/v1/notifications/read-all` | Yes | Mark all as read |
+| GET | `/users/` | Admin | List users |
+| GET | `/users/<id>` | Admin/Self | Get user |
+| PUT | `/users/<id>` | Admin | Update user |
+| GET | `/agents/` | Yes | List agents |
+| GET | `/agents/<id>/tickets` | Yes | Agent's tickets |
+| PUT | `/agents/<id>/availability` | Yes | Update availability |
 
-### Real-time Notifications (WebSocket)
+### Admin
 
-Connect via Socket.IO with JWT:
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/admin/dashboard` | Admin | Dashboard metrics |
+| GET | `/admin/reports/tickets` | Admin | Ticket volume report |
+| GET | `/admin/reports/agents` | Admin | Agent performance |
+| GET | `/admin/reports/sla` | Admin | SLA compliance |
 
-```javascript
-const socket = io('http://localhost:5001', {
-  auth: { token: 'YOUR_JWT_TOKEN' }
-  // or query: { token: 'YOUR_JWT_TOKEN' }
-});
-socket.on('notification', (data) => console.log('New notification:', data));
-socket.on('connected', (data) => console.log('Connected as user:', data.user_id));
-```
+## Validation & Security
+
+- **Ticket creation:** subject 5–200 chars, description min 20 chars, valid priority/category, valid email
+- **Status transitions:** open→assigned|closed, assigned→in_progress|closed, in_progress→waiting|resolved|closed, etc.
+- **Error responses:** `{ "status": "error", "message": "...", "code": "ERROR_CODE", "errors": {...} }`
+- **RBAC:** Customer (own tickets), Agent (assigned + queue), Admin (all)
 
 ## Test Workflow
 
 1. **Register:** `POST /api/v1/auth/register`  
-   Body: `{"email": "user@example.com", "username": "user1", "password": "password123"}`
+   `{"name": "User", "email": "user@example.com", "password": "password123", "role": "customer"}`
 
 2. **Login:** `POST /api/v1/auth/login`  
-   Body: `{"email": "user@example.com", "password": "password123"}`  
-   Copy `access_token` from response.
+   `{"email": "user@example.com", "password": "password123"}`  
+   Copy `access_token`.
 
-3. **Create task:** `POST /api/v1/tasks`  
+3. **Create ticket:** `POST /api/v1/tickets`  
    Headers: `Authorization: Bearer <access_token>`  
-   Body: `{"title": "My first task", "description": "Task details", "status": "pending", "priority": "medium"}`
+   `{"subject": "Cannot login", "description": "Description with at least 20 characters", "category": "technical", "customer_email": "user@example.com"}`
 
-4. **Get tasks:** `GET /api/v1/tasks`  
-   Headers: `Authorization: Bearer <access_token>`
-
-5. **Create project:** `POST /api/v1/projects`  
-   Body: `{"name": "My Project", "description": "Project description"}`
-
-6. **Add member:** `POST /api/v1/projects/1/members`  
-   Body: `{"user_id": 2, "role": "member"}`
-
-### Mock JWT (development)
-
-With `MOCK_JWT=true`, use header `X-Mock-User-Id: 1` instead of Bearer token:
+## Run Tests
 
 ```bash
-curl -H "X-Mock-User-Id: 1" http://localhost:5001/api/v1/tasks/
+pytest tests/ -v
 ```
 
-Disable with `MOCK_JWT=false` in `.env` for real token testing.
+Tests cover: invalid email (400), invalid priority (400), unauthorized (403), valid request (201), status transition validation.

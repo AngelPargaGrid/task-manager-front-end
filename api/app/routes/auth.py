@@ -1,4 +1,4 @@
-"""Authentication endpoints."""
+"""Authentication endpoints (PRD 6.1)."""
 
 from flask import request
 from flask_restx import Namespace, Resource
@@ -13,6 +13,7 @@ from marshmallow import ValidationError
 from app import db
 from app.models.user import User
 from app.schemas.user import UserCreateSchema, UserLoginSchema
+from app.exceptions import ValidationException, ConflictException, UnauthorizedException
 
 ns = Namespace("auth", description="Authentication operations")
 
@@ -29,31 +30,38 @@ class Register(Resource):
     @ns.response(400, "Validation error")
     @ns.response(409, "User already exists")
     def post(self):
-        """Register a new user."""
+        """Register a new user (PRD FR-032)."""
         try:
             data = user_create_schema.load(request.get_json())
         except ValidationError as err:
-            return {"errors": err.messages}, 400
+            raise ValidationException(errors=err.messages)
 
         if User.query.filter_by(email=data["email"]).first():
-            return {"message": "Email already registered"}, 409
-        if User.query.filter_by(username=data["username"]).first():
-            return {"message": "Username already taken"}, 409
+            raise ConflictException("Email already registered")
+
+        username = data.get("username") or data["email"]  # unique default
+        if User.query.filter_by(username=username).first():
+            raise ConflictException("Username already taken")
 
         user = User(
+            name=data["name"],
             email=data["email"],
-            username=data["username"],
+            username=username,
+            role=data.get("role", "customer"),
+            expertise_areas=data.get("expertise_areas") if data.get("role") == "agent" else None,
         )
         user.set_password(data["password"])
         db.session.add(user)
         db.session.commit()
 
         return {
+            "status": "success",
             "message": "User created successfully",
             "user": {
                 "id": user.id,
+                "name": user.name,
                 "email": user.email,
-                "username": user.username,
+                "role": user.role,
             },
         }, 201
 
@@ -70,26 +78,40 @@ class Login(Resource):
         try:
             data = user_login_schema.load(request.get_json())
         except ValidationError as err:
-            return {"errors": err.messages}, 400
+            raise ValidationException(errors=err.messages)
 
         user = User.query.filter_by(email=data["email"]).first()
         if not user or not user.check_password(data["password"]):
-            return {"message": "Invalid email or password"}, 401
+            raise UnauthorizedException("Invalid email or password")
         if not user.is_active:
-            return {"message": "Account is disabled"}, 401
+            raise UnauthorizedException("Account is disabled")
 
         access_token = create_access_token(identity=str(user.id))
         refresh_token = create_refresh_token(identity=str(user.id))
 
         return {
+            "status": "success",
             "access_token": access_token,
             "refresh_token": refresh_token,
             "user": {
                 "id": user.id,
+                "name": user.name,
                 "email": user.email,
-                "username": user.username,
+                "role": user.role,
             },
         }, 200
+
+
+@ns.route("/logout")
+class Logout(Resource):
+    """Logout - client should discard token."""
+
+    @ns.doc("logout")
+    @ns.response(200, "Logged out")
+    @jwt_required(optional=True)
+    def post(self):
+        """Logout. Client must discard the JWT token."""
+        return {"status": "success", "message": "Logged out successfully"}, 200
 
 
 @ns.route("/refresh")
@@ -105,10 +127,9 @@ class Refresh(Resource):
         user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         if not user or not user.is_active:
-            return {"message": "User not found or inactive"}, 401
-
+            raise UnauthorizedException("User not found or inactive")
         access_token = create_access_token(identity=str(user_id))
-        return {"access_token": access_token}, 200
+        return {"status": "success", "access_token": access_token}, 200
 
 
 @ns.route("/me")
@@ -124,11 +145,17 @@ class Me(Resource):
         user_id = int(get_jwt_identity())
         user = User.query.get(user_id)
         if not user:
-            return {"message": "User not found"}, 404
+            raise UnauthorizedException("User not found")
 
         return {
-            "id": user.id,
-            "email": user.email,
-            "username": user.username,
-            "is_active": user.is_active,
+            "status": "success",
+            "user": {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role,
+                "availability_status": user.availability_status,
+                "expertise_areas": user.expertise_areas,
+                "is_active": user.is_active,
+            },
         }, 200
