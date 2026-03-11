@@ -114,6 +114,22 @@ python run.py
 | DELETE | `/tasks/<id>` | Yes | Delete task |
 | POST | `/tasks/reports/generate` | Yes | Start report generation (202, returns task_id) |
 
+### Blog (posts, comments, categories, search)
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/blog/posts` | No | List posts (paginated, 20/page, cached) |
+| POST | `/blog/posts` | Yes | Create post |
+| GET | `/blog/posts/<id>` | No | Get single post (cached) |
+| PUT | `/blog/posts/<id>` | Yes | Update post (author only) |
+| DELETE | `/blog/posts/<id>` | Yes | Delete post (author only) |
+| GET | `/blog/posts/<id>/comments` | No | List comments |
+| POST | `/blog/posts/<id>/comments` | Yes | Add comment |
+| DELETE | `/blog/posts/<id>/comments/<cid>` | Yes | Delete comment (author only) |
+| GET | `/blog/categories` | No | List categories |
+| POST | `/blog/categories` | Yes | Create category |
+| GET | `/blog/search?q=keyword` | No | Search posts by title/content |
+
 ### Admin
 
 | Method | Endpoint | Auth | Description |
@@ -163,6 +179,7 @@ Run specific test files:
 pytest tests/test_auth.py -v
 pytest tests/test_tasks.py -v
 pytest tests/test_validation.py -v
+pytest tests/test_blog.py -v
 pytest tests/test_performance.py -v
 ```
 
@@ -172,7 +189,7 @@ Skip performance benchmarks (faster runs):
 pytest tests/ -m "not performance" -v
 ```
 
-Tests cover: auth (registration, login, me), tasks (CRUD, projects, reports, caching), validation (tickets, tasks), performance benchmarks.
+Tests cover: auth, tasks, blog (posts, comments, categories, search, caching), validation (tickets, tasks), performance benchmarks.
 
 ## Performance Features
 

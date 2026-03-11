@@ -62,6 +62,22 @@ def task_user(client):
 
 
 @pytest.fixture
+def blog_category(app):
+    """Create a blog category for tests."""
+    from app.models.blog_category import BlogCategory
+
+    with app.app_context():
+        cat = BlogCategory(
+            name="Technology",
+            slug="technology",
+            description="Tech posts",
+        )
+        db.session.add(cat)
+        db.session.commit()
+        return {"id": cat.id, "name": cat.name, "slug": cat.slug}
+
+
+@pytest.fixture
 def task_user2(client):
     """Create second user for assignment tests."""
     resp = client.post(

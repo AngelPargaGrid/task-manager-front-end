@@ -80,8 +80,8 @@ def create_app(config_name: str = "development") -> Flask:
     api = Api(
         flask_app,
         version="1.0",
-        title="Customer Support Ticket API",
-        description="Comprehensive customer support ticket system with JWT auth, ticket management, assignment, status tracking, and admin dashboard.",
+        title="Customer Support & Blog API",
+        description="Customer support ticket system (tickets, tasks, agents, admin) and Blog (posts, comments, categories, search) with JWT auth, Redis caching, and Swagger.",
         doc="/swagger",
         prefix="/api/v1",
         authorizations={
@@ -105,7 +105,19 @@ def create_app(config_name: str = "development") -> Flask:
 
     register_blueprints(api)
 
-    from app.models import user, ticket, comment, assignment, attachment, notification, task, project  # noqa: F401
+    from app.models import (  # noqa: F401
+        user,
+        ticket,
+        comment,
+        assignment,
+        attachment,
+        notification,
+        task,
+        project,
+        blog_post,
+        blog_comment,
+        blog_category,
+    )
 
     with flask_app.app_context():
         db.create_all()
