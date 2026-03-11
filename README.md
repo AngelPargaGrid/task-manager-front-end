@@ -1,75 +1,153 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación frontend modular con autenticación, dashboard, Kanban board, feed social y soporte para dark mode.
 
-Currently, two official plugins are available:
+## Stack Tecnológico
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **TypeScript**
+- **Vite 7** — Build tool
+- **Tailwind CSS** — Estilos y dark mode
+- **@dnd-kit** — Drag and drop (Kanban)
+- **Recharts** — Gráficas
+- **Playwright** — Tests E2E
+
+---
+
+## Arquitectura
+
+### Estructura del Proyecto
+
+```
+src/
+├── App.tsx                 # Punto de entrada principal, rutas y layout
+├── main.tsx                # Renderizado raíz (StrictMode)
+├── index.css               # Estilos globales + Tailwind
+│
+├── auth/                   # Autenticación
+│   ├── AuthProvider.tsx    # Proveedor de contexto de auth
+│   ├── AuthContext.tsx     # Contexto y estado de sesión
+│   ├── useAuth.ts          # Hook para consumir auth
+│   └── auth.types.ts       # Tipos de autenticación
+│
+├── components/
+│   ├── auth/               # Login, registro multistep
+│   ├── features/           # Pantallas/features principales
+│   │   ├── DashboardDemo.tsx
+│   │   ├── ProductCardDemo.tsx
+│   │   ├── SettingsPanelDemo.tsx
+│   │   └── ...
+│   ├── KanbanBoard/        # Módulo Kanban completo
+│   │   ├── KanbanBoard.tsx
+│   │   ├── BoardColumn.tsx
+│   │   ├── TaskCard.tsx
+│   │   ├── AddTaskModal.tsx
+│   │   ├── EditTaskModal.tsx
+│   │   ├── types.ts
+│   │   ├── initialTasks.ts
+│   │   └── kanbanAssignees.ts
+│   ├── layout/             # Layout, sidebar, profile
+│   │   ├── AppLayout.tsx
+│   │   ├── ProfilePage.tsx
+│   │   └── ...
+│   ├── shared/             # Componentes reutilizables
+│   │   ├── Avatar.tsx
+│   │   ├── Badge.tsx
+│   │   └── Card.tsx
+│   ├── TeamDashboard/      # Dashboard de equipo
+│   ├── SocialFeed/         # Feed, posts, comentarios
+│   └── ui/                 # Componentes UI base
+│       ├── Button.tsx
+│       ├── FormInput.tsx
+│       ├── ToggleSwitch.tsx
+│       └── ...
+│
+├── contexts/
+│   └── ThemeContext.tsx    # Tema light/dark
+│
+├── routes/
+│   └── ProtectedRoute.tsx  # HOC para rutas protegidas
+│
+├── types/                  # Tipos globales
+│   ├── dashboard.types.ts
+│   ├── product.types.ts
+│   ├── user.types.ts
+│   └── ...
+│
+└── data/                   # Datos de ejemplo
+    └── sampleUsers.ts
+```
+
+### Patrones de Diseño
+
+| Área | Implementación |
+|------|----------------|
+| **State** | `useState` local + Context (Auth, Theme) |
+| **Persistencia** | `localStorage` (tema, tareas Kanban, sesión simulada) |
+| **Routing** | `pushState` / `popstate` (SPA sin React Router) |
+| **Componentes** | Composición, props drilling donde aplica |
+
+### Flujo de la Aplicación
+
+```
+main.tsx
+  └── App
+        └── ThemeProvider
+              └── AuthProvider
+                    └── AppContent
+                          ├── [No autenticado] → Login / MultiStepRegister
+                          └── [Autenticado]   → AppLayout (sidebar + contenido)
+                                                ├── ProtectedRoute
+                                                └── renderPage() por ruta:
+                                                    /dashboard  → DashboardDemo
+                                                    /tasks      → KanbanBoard
+                                                    /projects   → ProductCardDemo
+                                                    /team       → TeamDashboard
+                                                    /feed       → Feed (SocialFeed)
+                                                    /settings   → SettingsPanelDemo
+                                                    /profile    → ProfilePage
+```
+
+### Módulo Kanban (Arquitectura)
+
+- **KanbanBoard**: Contenedor principal, DndContext, filtros, búsqueda, modales
+- **BoardColumn**: Columnas droppables (useDroppable) con SortableContext
+- **TaskCard**: Tarjetas sortables (useSortable) con metadatos
+- **AddTaskModal / EditTaskModal**: CRUD de tareas con asignación
+- **Estado**: `useState` + `localStorage` para persistencia
+
+### Tema (Dark Mode)
+
+- `ThemeContext` sincroniza con `localStorage` y `prefers-color-scheme`
+- Tailwind: clases `dark:` para estilos en modo oscuro
+- `document.documentElement.classList` para `class="dark"` en HTML
+
+---
+
+## Scripts
+
+| Comando | Descripción |
+|---------|-------------|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Build de producción |
+| `npm run preview` | Preview del build |
+| `npm run test` | Tests Playwright |
+| `npm run test:register` | Tests del formulario de registro |
+| `npm run lint` | ESLint |
+
+---
+
+## Tests
+
+Tests E2E con Playwright en `tests/` (ej. `register.spec.ts` para el formulario multistep).
+
+---
 
 ## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+El React Compiler no está habilitado por defecto por impacto en rendimiento. Ver [documentación](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ESLint
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-
+Para reglas más estrictas (type-aware), ver la documentación en el archivo de configuración de ESLint.
