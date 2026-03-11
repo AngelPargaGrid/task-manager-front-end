@@ -9,6 +9,7 @@ from flask_restx import Api
 from flask_socketio import SocketIO
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_caching import Cache
 from marshmallow import ValidationError as MarshmallowValidationError
 
 from config import config
@@ -20,6 +21,7 @@ ma = Marshmallow()
 jwt = JWTManager()
 socketio = SocketIO(cors_allowed_origins="*")
 limiter = Limiter(key_func=get_remote_address, default_limits=["100 per minute"])
+cache = Cache()
 
 
 def create_app(config_name: str = "development") -> Flask:
@@ -33,6 +35,13 @@ def create_app(config_name: str = "development") -> Flask:
     jwt.init_app(flask_app)
     socketio.init_app(flask_app)
     limiter.init_app(flask_app)
+    cache_config = {
+        "CACHE_TYPE": flask_app.config.get("CACHE_TYPE", "simple"),
+        "CACHE_DEFAULT_TIMEOUT": flask_app.config.get("CACHE_DEFAULT_TIMEOUT", 300),
+    }
+    if flask_app.config.get("CACHE_TYPE") == "redis":
+        cache_config["CACHE_REDIS_URL"] = flask_app.config.get("CACHE_REDIS_URL", "redis://localhost:6379/1")
+    cache.init_app(flask_app, config=cache_config)
 
     # Error handlers (PRD 8.1)
     @flask_app.errorhandler(APIException)
@@ -96,7 +105,7 @@ def create_app(config_name: str = "development") -> Flask:
 
     register_blueprints(api)
 
-    from app.models import user, ticket, comment, assignment, attachment, notification  # noqa: F401
+    from app.models import user, ticket, comment, assignment, attachment, notification, task, project  # noqa: F401
 
     with flask_app.app_context():
         db.create_all()

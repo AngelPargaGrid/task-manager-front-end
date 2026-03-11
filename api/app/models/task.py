@@ -1,5 +1,7 @@
 """Task model."""
 
+from sqlalchemy import Index
+
 from app import db
 
 
@@ -7,6 +9,12 @@ class Task(db.Model):
     """Task model for task management."""
 
     __tablename__ = "tasks"
+    __table_args__ = (
+        Index("idx_task_owner_status", "owner_id", "status"),
+        Index("idx_task_assignee_status", "assignee_id", "status"),
+        Index("idx_task_priority", "priority"),
+        Index("idx_task_project_id", "project_id"),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)

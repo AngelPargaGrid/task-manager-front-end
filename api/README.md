@@ -10,6 +10,8 @@ REST API for a customer support ticket management system with JWT authentication
 - **Flask-JWT-Extended** - JWT authentication
 - **Flask-RESTX** - REST API + Swagger UI
 - **Flask-Limiter** - Rate limiting
+- **Flask-Caching** - Redis caching
+- **Celery** - Background tasks
 - **bcrypt** - Password hashing (cost factor 12)
 
 ## Project Structure
@@ -101,6 +103,17 @@ python run.py
 | GET | `/agents/<id>/tickets` | Yes | Agent's tickets |
 | PUT | `/agents/<id>/availability` | Yes | Update availability |
 
+### Tasks (with Redis cache, Celery)
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/tasks/` | Yes | List tasks (cached 60s, filters: status, project_id, priority) |
+| POST | `/tasks/` | Yes | Create task |
+| GET | `/tasks/<id>` | Yes | Get task |
+| PUT | `/tasks/<id>` | Yes | Update task |
+| DELETE | `/tasks/<id>` | Yes | Delete task |
+| POST | `/tasks/reports/generate` | Yes | Start report generation (202, returns task_id) |
+
 ### Admin
 
 | Method | Endpoint | Auth | Description |
@@ -133,7 +146,29 @@ python run.py
 ## Run Tests
 
 ```bash
+cd api
 pytest tests/ -v
 ```
 
-Tests cover: invalid email (400), invalid priority (400), unauthorized (403), valid request (201), status transition validation.
+Run with coverage (task module 90%+):
+
+```bash
+pytest tests/ --cov=app.routes.tasks --cov=app.models.task --cov=app.tasks --cov=app.celery_app --cov-report=term-missing -q
+```
+
+Tests cover: validation, auth, task CRUD, caching, Celery background tasks, report generation.
+
+## Performance Features
+
+### Redis Caching
+- `GET /api/v1/tasks/` is cached for 60 seconds per user and query params
+- Set `REDIS_URL` or `CACHE_REDIS_URL` for production; tests use in-memory cache
+
+### Database Optimization
+- Task model has indexes: `idx_task_owner_status`, `idx_task_assignee_status`, `idx_task_priority`, `idx_task_project_id`
+- Queries use `joinedload(Task.project)` to avoid N+1
+
+### Background Tasks (Celery)
+- `POST /api/v1/tasks/reports/generate` - Start report generation (returns `task_id`)
+- Run Celery worker: `celery -A celery_worker worker -l info`
+- Requires Redis for broker: `CELERY_BROKER_URL=redis://localhost:6379/0`

@@ -4,8 +4,9 @@ from flask import request
 from flask_restx import Namespace, Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from marshmallow import ValidationError
+from sqlalchemy.orm import joinedload
 
-from app import db
+from app import db, cache
 from app.models.task import Task
 from app.models.project import Project, ProjectMember
 from app.models.notification import Notification
@@ -55,6 +56,16 @@ def _can_edit_task(user_id: int, task: Task) -> bool:
     return False
 
 
+def _make_tasks_cache_key():
+    """Generate cache key including user and query params."""
+    from flask import request
+    user_id = get_jwt_identity()
+    status = request.args.get("status", "")
+    project_id = request.args.get("project_id", "")
+    priority = request.args.get("priority", "")
+    return f"user_tasks:{user_id}:{status}:{project_id}:{priority}"
+
+
 @ns.route("/")
 class TaskList(Resource):
     """List and create tasks."""
@@ -63,6 +74,7 @@ class TaskList(Resource):
     @ns.response(200, "Success")
     @ns.response(401, "Not authenticated")
     @jwt_required()
+    @cache.cached(timeout=60, key_prefix=_make_tasks_cache_key)
     def get(self):
         """List tasks for the current user (owned, assigned, or in projects)."""
         user_id = int(get_jwt_identity())
@@ -70,18 +82,17 @@ class TaskList(Resource):
         project_id = request.args.get("project_id", type=int)
         priority = request.args.get("priority")
 
-        query = Task.query
-        # Filter: user owns, is assignee, or is project member
-        from sqlalchemy import or_
+        from sqlalchemy import or_, select
 
-        user_projects = db.session.query(ProjectMember.project_id).filter(
+        query = Task.query.options(joinedload(Task.project))
+        user_projects_stmt = select(ProjectMember.project_id).where(
             ProjectMember.user_id == user_id
-        ).subquery()
+        )
         query = query.filter(
             or_(
                 Task.owner_id == user_id,
                 Task.assignee_id == user_id,
-                Task.project_id.in_(user_projects),
+                Task.project_id.in_(user_projects_stmt),
             )
         )
 
@@ -130,7 +141,6 @@ class TaskList(Resource):
         db.session.add(task)
         db.session.commit()
 
-        db.session.commit()
         if task.assignee_id and task.assignee_id != user_id:
             n = _create_notification(
                 task.assignee_id,
@@ -211,3 +221,26 @@ class TaskDetail(Resource):
         db.session.delete(task)
         db.session.commit()
         return "", 204
+
+
+@ns.route("/reports/generate")
+class ReportGenerate(Resource):
+    """Request report generation (background task)."""
+
+    @ns.doc("request_report")
+    @ns.response(202, "Report generation started")
+    @ns.response(400, "Validation error")
+    @ns.response(401, "Not authenticated")
+    @jwt_required()
+    def post(self):
+        """Start report generation in background. Returns task_id to poll status."""
+        user_id = int(get_jwt_identity())
+        data = request.get_json() or {}
+        report_type = data.get("report_type", "task_summary")
+        if report_type not in ("task_summary", "project_summary"):
+            return {"message": "Invalid report_type. Use task_summary or project_summary"}, 400
+
+        from app.tasks import generate_report
+
+        task = generate_report.delay(user_id, report_type)
+        return {"message": "Report generation started", "task_id": task.id}, 202

@@ -24,6 +24,13 @@ class Config:
     # Rate limiting (PRD NFR-007: 100 req/min per user)
     RATELIMIT_DEFAULT = "100 per minute"
 
+    # Redis (for cache and Celery broker)
+    REDIS_URL = os.environ.get("REDIS_URL") or "redis://localhost:6379/0"
+
+    # Celery
+    CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL") or "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND") or "redis://localhost:6379/0"
+
 
 class DevelopmentConfig(Config):
     """Development configuration."""
@@ -37,6 +44,11 @@ class DevelopmentConfig(Config):
         "DATABASE_URL"
     ) or f"sqlite:///{_instance_path / 'app.db'}"
 
+    # Redis caching
+    CACHE_TYPE = "redis"
+    CACHE_REDIS_URL = os.environ.get("CACHE_REDIS_URL") or "redis://localhost:6379/1"
+    CACHE_DEFAULT_TIMEOUT = 300
+
 
 class TestingConfig(Config):
     """Testing configuration."""
@@ -45,12 +57,24 @@ class TestingConfig(Config):
     MOCK_JWT = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
 
+    # Use simple memory cache for tests (no Redis required)
+    CACHE_TYPE = "simple"
+    CACHE_DEFAULT_TIMEOUT = 60
+
+    # Celery runs synchronously in tests (no broker required)
+    CELERY_TASK_ALWAYS_EAGER = True
+
 
 class ProductionConfig(Config):
     """Production configuration."""
 
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+
+    # Redis caching
+    CACHE_TYPE = "redis"
+    CACHE_REDIS_URL = os.environ.get("CACHE_REDIS_URL") or os.environ.get("REDIS_URL") or "redis://localhost:6379/1"
+    CACHE_DEFAULT_TIMEOUT = 300
 
 
 config = {

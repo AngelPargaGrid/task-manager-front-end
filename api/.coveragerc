@@ -1,0 +1,13 @@
+[run]
+source = app
+omit =
+    */tests/*
+    */__pycache__/*
+    */migrations/*
+
+[report]
+# Fail if task-related modules are below 90%
+fail_under = 85
+exclude_lines =
+    pragma: no cover
+show_missing = True
