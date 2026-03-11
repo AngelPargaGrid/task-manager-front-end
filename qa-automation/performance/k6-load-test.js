@@ -1,7 +1,10 @@
 /**
  * k6 load test script for API and frontend
  * Run: k6 run qa-automation/performance/k6-load-test.js
+ * With JSON output: k6 run --out json=qa-automation/reports/output/k6-results.json qa-automation/performance/k6-load-test.js
  * Requires: API at K6_BASE_URL (default http://localhost:5001) and/or frontend at K6_FRONTEND_URL (default http://localhost:5173)
+ *
+ * Quality targets: p95 < 500ms, error rate < 1%
  */
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -13,8 +16,8 @@ export const options = {
     { duration: '30s', target: 0 },
   ],
   thresholds: {
-    http_req_duration: ['p(95)<500'],
-    http_req_failed: ['rate<0.1'],
+    http_req_duration: ['p(95)<500'],  // Target: <500ms
+    http_req_failed: ['rate<0.01'],    // Target: <1% error rate
   },
 };
 

@@ -1,6 +1,18 @@
 # QA Automation Framework
 
-Complete QA automation system for the full-stack application (React + Flask).
+Complete QA automation system with Page Object Model, code quality, security, performance, and quality dashboard.
+
+**See [QA_SUITE_DOCUMENTATION.md](./QA_SUITE_DOCUMENTATION.md) for full documentation.**
+
+## Quality Targets
+
+| Metric | Target |
+|--------|--------|
+| Test coverage | 80%+ |
+| Code complexity | <10 |
+| Security critical | 0 |
+| Response time | <500ms |
+| Error rate | <1% |
 
 ## Structure
 

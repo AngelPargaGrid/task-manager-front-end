@@ -18,6 +18,7 @@ good-names=i,j,k,ex,_,id,db,app,flask_app
 [DESIGN]
 max-args=10
 max-attributes=15
+max-complexity=10
 
 [TYPECHECK]
 ignored-modules=flask_marshmallow,marshmallow_sqlalchemy
